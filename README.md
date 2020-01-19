@@ -16,7 +16,7 @@ There'll be a manual for running performances in LOTRO **when it's done**.
 ## Can I get involved?
 At the moment I'm really only looking for maybe a few persons to help me test this further. I play as Gutur McGermot of the Kin 'Trollhappen' on Ithil at GMT evenings. If you plan to customize PlayWrite for another game, I would be very much interested to hear from you, though I don't play any other games at the moment which PlayWrite could be used in.
 ## May I sponsor you?
-Naa, by me a coffee or a beer, maybe.
+Naa, buy me a coffee or a beer some time, maybe.
 ## Legal stuff
 _PlayWrite is wtfpl software (http://www.wtfpl.net/txt/copying/)_
 
