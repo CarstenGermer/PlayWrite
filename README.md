@@ -11,7 +11,7 @@ PlayWrite is specifically tuned to read, process and output plays and sketches a
 I was looking for a hobby project that keeps me trained learning to work with new programming languages and systems surrounding those. I looked into Swift, Golang and Rust, all of which I have done basic training with, but after initial research I found that at the time they lacked crucial specific functionality or libraries that I would need. I had done some desktop automatization with AHK before but nothing close to this involved. If I had just wanted to get PlayWrite done, I would have used Python.
 Besides the training aspect, PlayWrite is a prototype of chaining into the communication of legacy distributed systems. This concept can be used to augment legacy systems with e.g. event sourcing or new command inputs without having to change the targeted software.
 ## Where is the manual?
-There'll be a manual for running performances in LOTRO when it's done.
+There'll be a manual for running performances in LOTRO **when it's done**.
 2020-01-19: Distributed client-server testing is done but I want to run some tests at larger scale, with 3-4 clients, before I write that manual.
 ## Legal stuff
 _PlayWrite is wtfpl software (http://www.wtfpl.net/txt/copying/)_
