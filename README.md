@@ -13,6 +13,6 @@ Besides the training aspect, PlayWrite is a prototype of chaining into the commu
 ## Where is the manual?
 There'll be a manual for running performances in LOTRO when it's done.
 2020-01-19: Distributed client-server testing is done but I want to run some tests at larger scale, with 3-4 clients, before I write that manual.
-
-
+## Legal stuff
+_PlayWrite is wtfpl software (http://www.wtfpl.net/txt/copying/)_
 _Alle erwähnten Marken oder Warenzeichen oder eingetragenen Marken oder Warenzeichen sind das Eigentum ihrer jeweiligen Besitzer._
