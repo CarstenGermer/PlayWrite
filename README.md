@@ -13,6 +13,8 @@ Besides the training aspect, PlayWrite is a prototype of chaining into the commu
 ## Where is the manual?
 There'll be a manual for running performances in LOTRO **when it's done**.
 2020-01-19: Distributed client-server testing is done but I want to run some tests at larger scale, with 3-4 clients, before I write that manual.
+## Can I get involved?
+At the moment I'm really only looking for maybe a few persons to help me test this further. I play as Gutur McGermot of the Kin 'Trollhappen' on Ithil at MET evenings. If you plan to customize PlayWrite for another game, I would be very much interested to hear from you, though I don't play any other games at the moment which PlayWrite could be used in.
 ## Legal stuff
 _PlayWrite is wtfpl software (http://www.wtfpl.net/txt/copying/)_
 
