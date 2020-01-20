@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2019 by Carsten Germer
-    Version 20200117 Beta
+    Version 20200120 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -662,4 +662,5 @@ return
 
 ; Include general functions used in both, server and client
 #Include PlayWrite-toolfuncs.ahk
+#Include PlayWrite-com_LOTRO.ahk
 #Include debughelper.ahk
