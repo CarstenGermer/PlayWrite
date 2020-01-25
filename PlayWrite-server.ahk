@@ -165,7 +165,7 @@ if (com_Debug)
 	Debug.WriteNL("Actors found in PlayWrite file: " . FoundActorsStr)
 }
 
-; initiate cfLastSize and cfLastLineAmount and start timer
+; initiate cfLastSize and cfLastLineAmount
 FileGetSize, cfLastSize, % cfFilename
 if (ErrorLevel > 0)
 {

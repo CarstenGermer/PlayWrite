@@ -1,0 +1,42 @@
+﻿[prequest]
+qwt_Teaser = *emote*sad*Meine Laute wurde gestohlen! Mag mich jemand _mit Namen ansprechen_ und mir _helfen_?
+qwt_Interval = 30000
+qwt_NoCommand = *emote*shrug* Ich höre, dass Du mich ansprichst, cur_player, aber ich verstehe nicht? *pause*2000*
+aufgabe|hilfe|helfe|deutsch = qwt_goto:anfang
+quest|help|english = qwt_goto:start
+qwt_next = anfang
+
+# ENG skript for the quest
+
+[start]
+qwt_Intro = *emote*shrug* I'm sorry, I haven't translated my woes yet, cur_player.*pause*3000*You would need to speak to me in german.
+quest|help|english = *emote*shrug* I'm really sorry, I can't understand you yet. *pause*2000*
+
+# DEU Skript für die Aufgabe
+
+[anfang]
+qwt_Intro = *emote*sad* Mir wurde meine Laute in den südlichen Breefeldern gestohlen!*pause*2000* *emote*beckon* Ich gebe Dir gerne eine Aufgabe, cur_player. *pause*2000*
+qwt_NoCommand = *emote*shrug* Aha, hmhm. cur_player, brauchst Du ein wenig Hilfe?
+aufgabe = qwt_play:playanfang.pwt
+hilfe = *emote*talk* Wenn Du mich im Moment ansprichst kann ich etwas sagen zu*pause*2000*Breefelder, Aufgabe, annehmen, Ziel und Belohnung. *pause*2000*
+bedingung|ziel = *emote*talk* Bringe mir einige Waffen von den Räubern der südlichen Breefelder.*pause*2000* *emote*point* Wirst Du diese Aufgabe annehmen, cur_player? *pause*2000*
+belohnung|bezahlung = *emote*talk* Ich habe nur mein Picknick bei mir.*pause*2000* *emote*talk* Aber ich gebe Dir gerne von meinem stärkenden Essen! *pause*2000*
+breefelder = *emote*talk* Die südlichen Breefelder liegen nördlich von Arthurs Lager an der Strasse zum Auenland. *pause*2000*
+annehmen = qwt_goto:gegeben
+qwt_Next = gegeben
+
+[gegeben]
+qwt_Intro = *emote*cheer* Oh, vielen Dank, cur_player!*pause*2000* *emote*yes* Ich werde hier auf Dich warten. *pause*2000*
+qwt_NoCommand = *emote*shrug* Soso, aha. cur_player, brauchst Du ein wenig Hilfe?
+hilfe = *emote*talk* Wenn Du mich im Moment ansprichst kann ich etwas sagen zu*pause*2000* *emote*talk* Breefelder, Ziel und Belohnung. *pause*2000*
+bedingung|ziel = *emote*talk* Bringe mir einige Waffen von den Räubern der südlichen Breefelder, cur_player. *pause*2000*
+belohnung|bezahlung = *emote*talk* Ich habe nur mein Picknick bei mir.*pause*2000* *emote*talk* Aber ich gebe Dir gerne von meinem stärkenden Essen! *pause*2000*
+warte = *emote*talk* Oh ja, natürlich warte ich noch auf die Waffen der Räuber! *pause*2000*
+breefelder = *emote*talk* Die südlichen Breefelder liegen nördlich von Arthurs Lager an der Strasse zum Auenland. *pause*2000*
+qwt_Next = ende
+
+[ende]
+qwt_Intro = *emote*cheer* Huzzah!*pause*2000* *emote*hug* Meine Laute konntest Du zwar nicht finden, cur_player, aber zumindest*pause*2000* *emote*fight* haben ein paar Unholde bekommen was sie verdienen! *pause*2000* Danke Dir nochmals von ganzem Herzen, cur_player.
+qwt_NoCommand = *emote*cheer* Dank Dir noch einmal sehr herzlich, cur_player.*pause*2000* *emote*hug* Ich denke ich sollte deine Zeit nicht länger in Anspruch nehmen. *pause*2000*
+aufgabe|hilfe|helfe|ziel|wiederhol = *emote*shrug* Vielleicht bekomme ich ja für die Waffen eine neue Laute?*pause*2000* *emote*wink* Du kannst gerne später noch einmal zu mir kommen.*pause*2000* qwt_remove
+qwt_Next = none
