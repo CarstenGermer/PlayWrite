@@ -1,5 +1,5 @@
 ﻿/*
-    PlayWrite, copyright 2019 by Carsten Germer
+    PlayWrite, copyright 2020 by Carsten Germer
     Version 20200120 Beta
     
     This program is free software. It comes without any warranty, to
@@ -8,7 +8,7 @@
     To Public License, Version 2, as published by Sam Hocevar.
     See http://www.wtfpl.net/ for more details.
      
-     Restrictions pertaining Autohotkey may apply: https://www.autohotkey.com/docs/license.htm
+    Restrictions pertaining Autohotkey may apply: https://www.autohotkey.com/docs/license.htm
 */
 
 /*

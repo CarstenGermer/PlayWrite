@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 20200125 Beta
+    Version 20200128 Beta
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -24,12 +24,11 @@ FileEncoding, UTF-8 ; This actually means the FILE HAS TO BE SAVED AS "UTF-8 wit
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
-global com_Debug := True
+global com_Debug := False
 global i18nArray := []
 global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
 global pwts_Running := True
-global pwts_WaitingLinedone := ""
 
 ; Settings for communication with the target system
 global com_PreOut := i18n("com_PreOut", "System")
@@ -40,16 +39,10 @@ global com_WinOutput := i18n("com_WinOutput")
 
 ; Settings for PlayWrites intersystems communication
 global pwt_Comment := i18n("pwt_Comment", "System")
-global pwt_Filename := "test.pwt"
-global pwt_FreeActors := ""
-global pwts_Actor := ""
-global pwt_Actors := []
 global pwt_LinesInScript := 0
 global pwt_CurrentLine := 1
 global lv_currClient := ""
 global lv_currSection := ""
-global lv_currActor := ""
-global lv_RowNumber := 0
 
 ; Settings for QuestWrite
 global qwt_Actor := ""
@@ -74,7 +67,6 @@ global cfCurrentLineAmount := 0
 global cfLastLineAmount := 0
 global newFileLines := []
 global cfLineClean := i18n("cfLineClean", "System")
-global cfDirector := i18n("cfDirector", "System")
 global cfFilePollTime := % i18n("cfFilePolltime", "System") + 1 - 1 ; weird syntax for int(string) ...
 
 CheckAHK()
@@ -344,8 +336,8 @@ QWTfilefetch(msg_key, inisection := false)
 ParseCommandfile()
 {
 	; make globals accessible to this function
-	global com_Debug, pwt_Channel, pwts_Waitinglinedone, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1
-    global lv_currActor, cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep
+	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1
+    global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep
     global curFile, cfCurrentLineAmount, cfLastLineAmount, lv_currClient, lv_currSection
     curLineLow := ""
     qwt_play := ""
@@ -560,8 +552,8 @@ ParseCommandfile()
 ParsePlay()
 {
 	; make globals accessible to this function
-	global com_Debug, pwt_Script, pwts_Actor, qwt_Actor, pwt_Channel, cfDirector, qwt_InPlay, qwt_play, qwt_play1
-    global lv_currActor, pwts_Waitinglinedone, pwt_CurrentLine, pwts_Running, qwt_Questname
+	global com_Debug, pwt_Script, qwt_Actor, qwt_InPlay, qwt_play
+    global pwt_CurrentLine, pwts_Running, qwt_Questname
 
     if not qwt_play
         Return
