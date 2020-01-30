@@ -13,8 +13,7 @@ PlayWrite and QuestWrite are specifically tuned to read, process and output play
 I was looking for a hobby project that keeps me trained learning to work with new programming languages and systems surrounding those. I looked into Swift, Golang and Rust, all of which I have done basic training with, but after initial research I found that at the time they lacked crucial specific functionality or libraries that I would need. I had done some desktop automatization with AHK before but nothing close to this involved. If I had just wanted to get PlayWrite done, I would have used Python.
 Besides the training aspect, PlayWrite is a prototype of chaining into the communication of legacy distributed systems. This concept can be used to augment legacy systems with e.g. event sourcing or new command inputs without having to change the targeted software.
 ## Where are the manuals?
-There'll be manuals for running performances and quests in LOTRO **when they're done**.
-2020-01-25: I need to run some tests at larger scale, with 2-3 clients, before I write the manual for PlayWrite. After that the one for QuestWrite will follow.
+There's a user documentation [right here](USERDOCUMENTATION.md).
 ## Can I get involved?
 At the moment I'm really only looking for a few persons to help me test this further. I play as Gutur McGermot of the Kin 'Trollhappen' on Ithil at GMT evenings. If you plan to customize PlayWrite for another game, I would be very much interested to hear from you, though I don't play any other games which PlayWrite could be used in atm.
 ## May I sponsor you?
