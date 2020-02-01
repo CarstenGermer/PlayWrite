@@ -128,7 +128,7 @@ I feel I can't write much more than you hopefully completely understand by readi
 ### Keep in mind that humans are supposed to read it!
 Persons read at different speeds. So, err on the slow side and be liberal with pauses at the end of lines.
 ### Remind audience to set "chat bubbles: on"
-This is done in System -> Options -> UI Settings -> Chat Bubbles
+This is done in System -> Options -> UI Settings -> Chat Bubbles.
 Any kind of performance is much more enjoyable if the audience doesn't have to look at the chat-window the whole time.
 ### Use lots of emotes
 None likes to watch wooden puppets spewing lines of text. Use emotes liberally.
