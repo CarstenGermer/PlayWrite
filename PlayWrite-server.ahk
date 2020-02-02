@@ -65,7 +65,7 @@ global cfLastSize := 0
 global cfCurrentLineAmount := 0
 global cfLastLineAmount := 0
 global newFileLines := []
-global cfLineClean := i18n("cfLineClean", "System")
+global cfLineClean := i18n("cfLineCleanPWT", "System")
 global cfDirector := i18n("cfDirector", "System")
 global cfFilePollTime := % i18n("cfFilePolltime", "System") + 1 - 1 ; weird syntax for int(string) ...
 

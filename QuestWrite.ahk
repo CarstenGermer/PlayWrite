@@ -66,7 +66,7 @@ global cfLastSize := 0
 global cfCurrentLineAmount := 0
 global cfLastLineAmount := 0
 global newFileLines := []
-global cfLineClean := i18n("cfLineClean", "System")
+global cfLineClean := i18n("cfLineCleanQWT", "System")
 global cfFilePollTime := % i18n("cfFilePolltime", "System") + 1 - 1 ; weird syntax for int(string) ...
 
 CheckAHK()
@@ -468,12 +468,12 @@ ParseCommandfile()
         
         curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
 
-        if (RegExMatch(curLine, "qwt_play:(\w+.\w+)", qwt_play))
+        if (RegExMatch(curLine, "qwt_play:(.+\.\w+)", qwt_play))
         {
             qwt_play := qwt_play1
             if (com_Debug)
                 Debug.WriteNL("Found qwt_play " . qwt_play . " in line: " . curLine . "<")
-            curLine := RegExReplace(curLine, "qwt_play:(\w+.\w+)")
+            curLine := RegExReplace(curLine, "qwt_play:(.+\.\w+)")
         }
 
         if (RegExMatch(curLine, "qwt_goto:(\w+)", qwt_goto))
