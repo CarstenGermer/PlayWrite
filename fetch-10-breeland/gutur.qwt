@@ -15,7 +15,7 @@ quest = qwt_play:playanfang-eng.pwt
 help = *emote*talk* At his moment I can talk about Breefields, quest, reward, task and accept. *pause*1000*
 require|task|goal = *emote*talk* Bring me some bandits weapons from the southern Breefields, cur_player. *pause*1000* *emote*point* Will you accept this, cur_player? *pause*1000*
 reward|recomp = *emote*talk* I would gladly give you some of my invigorating rations. *pause*1000*
-breefield = *emote*talk* The southern Breefields are located north of Arthurs camp on the street to the Shire. *pause*1000*
+breefield = *emote*talk* The southern Breefields are located north of Adso's camp on the street to the Shire. *pause*1000*
 accept|take = qwt_goto:given
 qwt_next = given
 
@@ -23,10 +23,10 @@ qwt_next = given
 qwt_Intro = *emote*cheer* Oh, thank you so much, cur_player!*pause*2000* *emote*yes* I will wait for you here, cur_player. *pause*1000*
 qwt_NoCommand = *emote*shrug* Well, cur_player, do you need a little help?
 help = *emote*talk* At his moment I can talk about Breefields, task, wait and reward. *pause*1000*
-require|task|goal = *emote*talk* Bring me some bandits weapons from the southern Breefields, cur_player. *pause*1000*
+require|task|goal = *emote*talk* Bring me some outlaws weapons from the southern Breefields, cur_player. *pause*1000*
 reward|recomp = *emote*talk* I would gladly give you some of my invigorating rations. *pause*1000*
-wait = *emote*talk* Sure, I'm still waiting for the bandits weapons! *pause*1000*
-breefield = *emote*talk* The southern Breefields are located north of Arthurs camp on the street to the Shire. *pause*1000*
+wait = *emote*talk* Sure, I'm still waiting for the outlaws weapons! *pause*1000*
+breefield = *emote*talk* The southern Breefields are located north of Adso's camp on the street to the Shire. *pause*1000*
 qwt_Next = finished
 
 [finished]
