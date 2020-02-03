@@ -136,8 +136,9 @@ Gui Add, Text, x450 y8 w30 h30 +0x200, Role:
 Gui Add, Text, x490 y8 w80 h30 +0x200, % qwt_Actor
 Gui Add, ListView, x15 y48 w600 h225 +Count2 +ReadOnly +Grid -Multi +LV0x4000 +NoSort +NoSortHdr +LV0x840 -LV0x10 gPlayerList, Player Name|Quest Section
 Gui Add, Text, x30 y300 w120 h30 +0x200, Last interaction with
-Gui Add, Button, x150 y300 w130 h30 Disabled vqwt_RecentPlayer gMarkPlayer, Player Name
-Gui Add, Button, x300 y300 w200 h30 Disabled vPlayerNextStep gPlayerNextStep, Next Step
+Gui Add, Button, x150 y300 w120 h30 Disabled vqwt_RecentPlayer gMarkPlayer, Player Name
+Gui Add, Button, x290 y300 w120 h30 Disabled vPlayerNextStep gPlayerNextStep, Next Step
+Gui Add, Button, x430 y300 w120 h30 Disabled vPlayerRemove gRemovePlayer, Remove
 Gui Add, Text, x40 y350 w174 h30 +0x200 Disabled vNumLinesPlay, Number of Lines in Play:
 Gui Add, Text, x216 y350 w38 h30 +0x200 Disabled vNumLinesScript, % pwt_LinesInScript
 Gui Add, Text, x288 y350 w109 h30 +0x200 Disabled vCurrLine, Current line # :
@@ -169,6 +170,24 @@ Loop % LV_GetCount()
 }
 Return
 
+RemovePlayer:
+MsgBox , 0x34, Remove %qwt_RecentPlayer%?, Remove %qwt_RecentPlayer% from the list completely!
+IfMsgBox Yes, {
+    Loop % LV_GetCount()
+    {
+        LV_GetText(lv_currClient, A_Index, 1)
+        if (lv_currClient = qwt_RecentPlayer)
+        {
+            LV_Delete(A_Index)
+            GuiControl, Disable, qwt_RecentPlayer
+            GuiControl, Disable, PlayerNextStep
+            GuiControl, Disable, PlayerRemove
+            Break
+        }
+    }
+}
+Return
+
 PlayerList:
 if A_GuiEvent = DoubleClick
 {
@@ -182,6 +201,7 @@ if A_GuiEvent = DoubleClick
         GuiControl,, PlayerNextStep, % PlayerNextStep
         GuiControl, Enable, qwt_RecentPlayer
         GuiControl, Enable, PlayerNextStep
+        GuiControl, Enable, PlayerRemove
     }
 }
 return
@@ -465,6 +485,7 @@ ParseCommandfile()
         GuiControl,, PlayerNextStep, % PlayerNextStep
         GuiControl, Enable, qwt_RecentPlayer
         GuiControl, Enable, PlayerNextStep
+        GuiControl, Enable, PlayerRemove
         
         curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
 

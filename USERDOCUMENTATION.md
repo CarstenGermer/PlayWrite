@@ -208,6 +208,8 @@ The name of the last player interacting with you.
 Pressing this button highlights the particular player in the list, as this list might get long.
 ### Next Step
 If a player is chosen in the list, this button advances the player to the next section of the quest. Use this for example to advance the player to the next section after she or he handed you some items you want the players to collect.
+### Remove
+This removes the player from the list completely. This might be desired if the player accidentally chose a wrong language or something.
 ### Key "Pause"
 Pressing the Pause-key on your keyboard pauses processing of the current *.qwt or *.pwt. This is helpful if you need to text-chat during an ongoing event.
 ### ONLY during optional *.pwt : Number of lines in Play
