@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200120 Beta
+    Version 20200203 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -129,20 +129,20 @@ ProcessActor(curLine)
         Debug.WriteNL("ProcessActor curLine: " . curLine)
 
     ;Split line with intermediate commands into sublines and process parts in subloop
-	if (RegExMatch(curLine, "\*.+?\*.+?\*"))
+	if (RegExMatch(curLine, "\*\w+?\*\w+?\*"))
 	{
 		if (com_Debug)
 			Debug.WriteNL("Actors line has subcommands")
 		partsLine := Array()
 		;as long as there is subcommands within the line...
-		while (RegExMatch(curLine, "\*.+?\*.+?\*"))
+		while (RegExMatch(curLine, "\*\w+?\*\w+?\*"))
 		{
 			;Trim curLine just to be on the safe side of stray whitespace
 			curLine := Trim(curLine)
 			if (com_Debug)
 				Debug.WriteNL("while curLine: " . curLine)
 			;find the position of the leftmost subcommand...
-			foundPos := RegExMatch(curLine, "\*.+?\*.+?\*",foundSubCommand)
+			foundPos := RegExMatch(curLine, "\*\w+?\*\w+?\*",foundSubCommand)
 			if (com_Debug)
 				Debug.WriteNL("foundPos " . foundPos)
 			;if the leftmost subcommand _is not_ immediately at the beginning of the line...
@@ -159,7 +159,7 @@ ProcessActor(curLine)
 				;add the found subcommand to the sublines array...
 				partsLine.Push(foundSubCommand)
 				;and cut the subcommand from the current line.
-				curLine := RegExReplace(curLine, "\*.+?\*.+?\*", "", , 1)
+				curLine := RegExReplace(curLine, "\*\w+?\*\w+?\*", "", , 1)
 			}
 		}
 		;add the remainder of the current line, if any, as subcommand to the subline array.
@@ -174,7 +174,7 @@ ProcessActor(curLine)
 			if (com_Debug)
 				Debug.WriteNL("partsLine " . A_Index . ": " . partsLine[A_Index])
 			; this part a command or spoken text?
-			if (RegExMatch(partsLine[A_Index], "(*ANYCRLF)^\*.+?\*.+?\*$"))
+			if (RegExMatch(partsLine[A_Index], "(*ANYCRLF)^\*\w+?\*\w+?\*$"))
 			{
 				; is a command - process
 				ProcessCommands(partsLine[A_Index])

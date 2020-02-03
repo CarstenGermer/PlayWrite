@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200120 Beta
+    Version 20200203 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -585,7 +585,7 @@ ParsePlay()
         }
         
         ; pause may stand in its own line, to give the cast pause to move positions or such
-        if (RegExMatch(curLine, "(*ANYCRLF)^\s*\*pause\*(.+?)\*\s*$", parameter))
+        if (RegExMatch(curLine, "(*ANYCRLF)^\s*\*pause\*(\d+?)\*\s*$", parameter))
         {
             if (com_Debug)
                 Debug.WriteNL("Single pause in line detected: " . parameter1 . "<")

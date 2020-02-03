@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200120 Beta
+    Version 20200203 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -17,8 +17,8 @@ ProcessCommands(commandline)
 	; make globals accessible to this function
 	global com_Debug
 	
-	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*(.+?)\*.+?\*$", command)
-	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*.+?\*(.+?)\*$", parameter)
+	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*(\w+?)\*\w+?\*$", command)
+	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*\w+?\*(\w+?)\*$", parameter)
 	
 	if (com_Debug)
 		Debug.WriteNL("PROCESS command: >" . command1 . "< parameter: >" . parameter1 . "<")
