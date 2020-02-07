@@ -243,11 +243,13 @@ if qwt_InPlay
     if not (pwts_Running)
     {
         pwts_Running := True
+        SoundPlay *48
         GuiControl,, PlayPause, PAUSE
     }
     else
     {
         pwts_Running := False
+        SoundPlay *16
         GuiControl,, PlayPause, PLAY
     }
 }
@@ -256,14 +258,16 @@ else
     if pwts_Running
     {
         pwts_Running := False
-        GuiControl,, PlayPause, PLAY
         StopTimer()
+        GuiControl,, PlayPause, PLAY
+        SoundPlay *16
     }
     else
     {
         pwts_Running := True
-        GuiControl,, PlayPause, PAUSE
         StartTimer()
+        GuiControl,, PlayPause, PAUSE
+        SoundPlay *48
     }
 }
 Return

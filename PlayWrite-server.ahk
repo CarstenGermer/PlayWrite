@@ -340,11 +340,13 @@ Gui, Submit, NoHide
 if not (pwts_Running)
 {
     pwts_Running := True
+    SoundPlay *48
     GuiControl,, PlayPause, PAUSE
 }
 else
 {
     pwts_Running := False
+    SoundPlay *16
     if (com_Debug)
         Debug.WriteNL("Pausing Play at line number " . pwt_CurrentLine . "<")
     else
