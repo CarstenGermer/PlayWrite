@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200203 Beta
+    Version 20200221 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -15,7 +15,7 @@
 ProcessCommands(commandline)
 {
 	; make globals accessible to this function
-	global com_Debug
+	global com_Debug, com_Channel
 	
 	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*(\w+?)\*\w+?\*$", command)
 	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*\w+?\*(\w+?)\*$", parameter)
@@ -25,6 +25,13 @@ ProcessCommands(commandline)
 	
 	Switch command1
 	{
+        case "com_Channel":
+        {
+			if (com_Debug)
+				Debug.WriteNL("COMMAND setting locale value of com_Channel to i18n(" . parameter1 . ") " . parameter1 . "<")
+            com_Channel := i18n(parameter1)
+        
+        }
         case "pause":
 		{
 			if (com_Debug)

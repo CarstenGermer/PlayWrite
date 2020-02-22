@@ -182,7 +182,7 @@ ProcessActor(curLine)
 			else
 			{
 				; is spoken text - output
-				OutputToTargetWindow(com_Channel . partsLine[A_Index])
+				OutputToTargetWindow(com_Channel . " " . partsLine[A_Index])
 			}
 		}
 		if (com_Debug)
@@ -194,7 +194,7 @@ ProcessActor(curLine)
 		curLine := RegExReplace(curLine, "(\r\n|\r|\n)")
         if (com_Debug)
             Debug.WriteNL("ProcessActor output raw curLine: " . curLine)
-		OutputToTargetWindow(com_Channel . curLine)
+		OutputToTargetWindow(com_Channel . " " . curLine)
 	}
 	return true
 }

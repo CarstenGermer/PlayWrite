@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200203 Beta
+    Version 20200221 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -270,7 +270,7 @@ if lv_RowNumber
         if lv_currActor
         {
             LV_Modify(lv_RowNumber , "Col2", "...")
-            OutputToTargetWindow(pwt_Channel . cfDirector . ": {#} actorconfirmed(" . lv_currClient . ", " . lv_currActor . ")")
+            OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#} actorconfirmed(" . lv_currClient . ", " . lv_currActor . ")")
         }
     }
 }
@@ -299,13 +299,13 @@ if lv_RowNumber
     if lv_currClient
     {
         LV_Modify(lv_RowNumber , "Col2", "...")
-        OutputToTargetWindow(pwt_Channel . cfDirector . ": {#} readycheck(" . lv_currClient . ")")
+        OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#} readycheck(" . lv_currClient . ")")
     }
 }
 Return
 
 ReadychekAll:
-OutputToTargetWindow(pwt_Channel . cfDirector . ": {#} readycheckall")
+OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#} readycheckall")
 Loop % LV_GetCount()
 {
     LV_GetText(lv_currClient, A_Index, 3)
@@ -332,7 +332,7 @@ Loop % LV_GetCount()
         else
             pwt_FreeActors := pwt_FreeActors . "," . lv_currActor
 }
-OutputToTargetWindow(pwt_Channel . cfDirector . ": {#} actorsfree(" . pwt_FreeActors . ")")
+OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#} actorsfree(" . pwt_FreeActors . ")")
 Return
 
 PlayPause:
@@ -358,7 +358,7 @@ Return
 pwtRestart:
 MsgBox 0x34, RESTART PLAYWRITE - This cancels the current play completely!
 IfMsgBox Yes, {
-    OutputToTargetWindow(pwt_Channel . cfDirector . ": {#}playdone")
+    OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#}playdone")
     Reload
     Sleep 1000 ; If successful, the reload will close this instance during the Sleep, so the line below will never be reached.
     MsgBox 0x30, The script could not be reloaded, exiting completely.
@@ -505,7 +505,7 @@ ParseCommandfile()
                 ; set actor as waitingforconfirmation
                 LV_Modify(A_Index , "Col2", "...")
                 ; send actorconfirmed(myid,actorname)
-                OutputToTargetWindow(pwt_Channel . cfDirector . ": {#} actorconfirmed(" . cur_ClientID . "," . lv_currActor . ")")
+                OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#} actorconfirmed(" . cur_ClientID . "," . lv_currActor . ")")
                 Gosub SendfreeActors
                 Break
             }
@@ -640,7 +640,7 @@ ParsePlay()
             Continue
         }
         ; send ClientID: line
-        OutputToTargetWindow(pwt_Channel . cfDirector . ": " . curClientID . ": " . curLine)
+        OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": " . curClientID . ": " . curLine)
         ; now we need to wait for confirmation from curClientID
         pwts_Waitinglinedone := curClientID ; An diesem Punkt ist schon auf-text-zu-auf ??? woher das letzte auf??
         GuiControl, Enable, WaitingForLine
@@ -652,7 +652,7 @@ ParsePlay()
     {
         pwts_Running := False
         GuiControl,, PlayPause, Play
-        OutputToTargetWindow(pwt_Channel . cfDirector . ": {#}playdone")
+        OutputToTargetWindow(pwt_Channel . " " . cfDirector . ": {#}playdone")
     }
     Return True
 }

@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 20200203 Beta
+    Version 20200221 Beta
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -55,6 +55,7 @@ global qwt_Interval := ""
 global qwt_NoCommand := ""
 global qwt_RecentPlayer := ""
 global qwt_CurrentPlayer := ""
+global qwt_CurrTimestamp := ""
 global qwt_InPlay := False
 global curLine := ""
 global PlayerNextStep := ""
@@ -134,18 +135,22 @@ Gui Add, Text, x200 y8 w80 h30 +0x200, Quest:
 Gui Add, Text, x250 y8 w190 h30 +0x200, % qwt_Questname
 Gui Add, Text, x450 y8 w30 h30 +0x200, Role:
 Gui Add, Text, x490 y8 w80 h30 +0x200, % qwt_Actor
-Gui Add, ListView, x15 y48 w600 h225 +Count2 +ReadOnly +Grid -Multi +LV0x4000 +NoSort +NoSortHdr +LV0x840 -LV0x10 gPlayerList, Player Name|Quest Section
-Gui Add, Text, x30 y300 w120 h30 +0x200, Last interaction with
-Gui Add, Button, x150 y300 w120 h30 Disabled vqwt_RecentPlayer gMarkPlayer, Player Name
-Gui Add, Button, x290 y300 w120 h30 Disabled vPlayerNextStep gPlayerNextStep, Next Step
-Gui Add, Button, x430 y300 w120 h30 Disabled vPlayerRemove gRemovePlayer, Remove
-Gui Add, Text, x40 y350 w174 h30 +0x200 Disabled vNumLinesPlay, Number of Lines in Play:
-Gui Add, Text, x216 y350 w38 h30 +0x200 Disabled vNumLinesScript, % pwt_LinesInScript
-Gui Add, Text, x288 y350 w109 h30 +0x200 Disabled vCurrLine, Current line # :
-Gui Add, Edit, x392 y350 w51 h30 r1 Number vpwt_Currentline Disabled, % pwt_CurrentLine
+Gui Add, ListView, x15 y48 w600 h225 +Count2 +ReadOnly +Grid -Multi +LV0x4000 +NoSort +NoSortHdr +LV0x840 -LV0x10 gPlayerList, Player Name|Quest Step|Timestamp Advanced
+Gui Add, Text, x30 y290 w120 h30 +0x200, Last interaction with
+Gui Add, Button, x150 y290 w120 h30 Disabled vqwt_RecentPlayer gMarkPlayer, Player Name
+Gui Add, Button, x290 y290 w120 h30 Disabled vPlayerNextStep gPlayerNextStep, Next Step
+Gui Add, Button, x430 y290 w120 h30 Disabled vPlayerRemove gRemovePlayer, Remove
+Gui Add, Text, x40 y330 w174 h30 +0x200 Disabled vNumLinesPlay, Number of Lines in Play:
+Gui Add, Text, x216 y330 w38 h30 +0x200 Disabled vNumLinesScript, % pwt_LinesInScript
+Gui Add, Text, x288 y330 w109 h30 +0x200 Disabled vCurrLine, Current line # :
+Gui Add, Edit, x392 y330 w51 h30 r1 Number vpwt_Currentline Disabled, % pwt_CurrentLine
 Gui Add, UpDown, Disabled vUDCurrLine, % pwt_CurrentLine
-Gui Add, Button, x464 y350 w104 h30 vPlayPause gPlayPause Disabled, PAUSE
-Gui Show, w630 h400, QuestWrite
+Gui Add, Button, x464 y330 w104 h30 vPlayPause gPlayPause Disabled, PAUSE
+; TODO Buttons for save and load
+Gui Add, Button, x150 y370 w120 h30 gListLoad, Load List
+Gui Add, Button, x290 y370 w120 h30 gListSave, Save List
+
+Gui Show, w630 h420, QuestWrite
 
 ; Start timer for polling the chatlog and reactig to players requests
 SetTimer, ParseCommandfile, % cfFilePollTime
@@ -157,6 +162,18 @@ SetTimer, ProcessTeaser, % qwt_Interval
 Return
 
 ; <GUI code>
+
+ListLoad:
+StopTimer()
+ImportCSV()
+StartTimer()
+Return
+
+ListSave:
+StopTimer()
+ExportCSV()
+StartTimer()
+Return
 
 MarkPlayer:
 Loop % LV_GetCount()
@@ -196,7 +213,7 @@ if A_GuiEvent = DoubleClick
         LV_GetText(qwt_RecentPlayer, A_EventInfo, 1)
         LV_GetText(qwt_Section, A_EventInfo, 2)
         PlayerNextStep := QWTfilefetch("qwt_next", lv_currSection)
-        qwt_RecentPlayer := qwt_CurrentPlayer
+        qwt_CurrentPlayer := qwt_RecentPlayer
         GuiControl,, qwt_RecentPlayer, % qwt_RecentPlayer
         GuiControl,, PlayerNextStep, % PlayerNextStep
         GuiControl, Enable, qwt_RecentPlayer
@@ -216,6 +233,9 @@ Loop % LV_GetCount()
     if (lv_currClient = qwt_CurrentPlayer)
     {
         LV_Modify(A_Index , "Col2", qwt_Section)
+        qwt_CurrTimestamp = %A_NowUTC% 
+        qwt_CurrTimestamp -= 19700101000000,seconds
+        LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
         Break
     }
 }
@@ -223,6 +243,7 @@ PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
 GuiControl,, PlayerNextStep, % PlayerNextStep
 curLine := QWTfilefetch("qwt_intro", qwt_Section)
 curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
+curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
 StopTimer()
 ProcessActor(curLine)
 StartTimer()
@@ -480,7 +501,9 @@ ParseCommandfile()
         }
         else if (lv_currSection = "prequest")
         {
-            LV_Add(, qwt_CurrentPlayer, lv_currsection)
+            qwt_CurrTimestamp = %A_NowUTC% 
+            qwt_CurrTimestamp -= 19700101000000,seconds
+            LV_Add(, qwt_CurrentPlayer, lv_currsection, qwt_CurrTimestamp)
             qwt_Section := lv_currSection
         }
         PlayerNextStep := QWTfilefetch("qwt_next", lv_currSection)
@@ -492,6 +515,7 @@ ParseCommandfile()
         GuiControl, Enable, PlayerRemove
         
         curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
+        curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
 
         if (RegExMatch(curLine, "qwt_play:(.+\.\w+)", qwt_play))
         {
@@ -539,6 +563,9 @@ ParseCommandfile()
                 if (lv_currClient = qwt_CurrentPlayer)
                 {
                     LV_Modify(A_Index , "Col2", qwt_Section)
+                    qwt_CurrTimestamp = %A_NowUTC% 
+                    qwt_CurrTimestamp -= 19700101000000,seconds
+                    LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
                     Break
                 }
             }
@@ -547,6 +574,7 @@ ParseCommandfile()
             GuiControl,, PlayerNextStep, % PlayerNextStep
             curLine := QWTfilefetch("qwt_intro", qwt_Section)
             curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
+            curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
             ProcessActor(curLine)
         }
         
@@ -735,6 +763,55 @@ StartTimer()
     SetTimer, ProcessTeaser, % qwt_Interval
     SetTimer, ParseCommandfile, % cfFilePollTime
     Return
+}
+
+ExportCSV()
+{
+    Global qwt_Questname, qwt_Actor
+    exportfile :=  ""
+    exportfilename := A_NowUTC . "-" . qwt_Questname . "-" . qwt_Actor . ".csv"
+    exportCol1 := ""
+    exportCol2 := ""
+    exportCol3 := ""
+    exportLine := ""
+    
+    FileSelectFile, exportfilename, S2, % exportfilename, Select csv file to store this quests data (OR CANCEL TO ABORT), CSV (*.csv)
+
+    exportfile := FileOpen(exportfilename, "w")   ; Creates a new file, overwriting any existing file.
+    If (!IsObject(exportfile)) {
+        Msgbox 0x40000,, % "Can't create "exportfilename " for writing."
+        Return False
+    }
+
+    Loop % LV_GetCount() {
+      LV_GetText(exportCol1, A_index, 1)
+      LV_GetText(exportCol2, A_index, 2)
+      LV_GetText(exportCol3, A_index, 3)
+      exportLine := exportCol1 . ";" . exportCol2 . ";" . exportCol3
+      exportfile.WriteLine(exportLine)
+    }
+
+    exportfile.Close()
+    exportfilename := ""
+    Return True
+}
+
+ImportCSV()
+{
+    importfile := ""
+    dummy := 0
+    FileSelectFile, importfile, 3, , Select csv file holding this quests save (OR CANCEL TO ABORT), CSV (*.csv)
+    FileGetSize, dummy, % importfile
+    if (ErrorLevel > 0) {
+        Return False
+    }
+    LV_Delete()
+    Loop, Read, % importfile     
+    {          
+        Array := StrSplit(A_LoopReadLine,";")
+        LV_ADD("",Array*)
+    }
+    Return True
 }
 
 ; Pressing [Pause] calls PlayPause, same as the GUI-button

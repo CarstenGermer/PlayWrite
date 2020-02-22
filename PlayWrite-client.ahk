@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200120 Beta
+    Version 20200221 Beta
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -128,13 +128,13 @@ com_WinOutput := i18n("com_WinOutput")
 Return
 
 RequestActorRefresh:
-OutputToTargetWindow(pwt_Channel . pwtc_ID . ": actorsplz(" . pwtc_ID . ")")
+OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": actorsplz(" . pwtc_ID . ")")
 ; Gui, Show
 Return
 
 RequestActorSet:
 Gui, Submit, NoHide
-OutputToTargetWindow(pwt_Channel . pwtc_ID . ": plzactor(" . pwtc_ID . "," . pwtc_Actor . ")")
+OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": plzactor(" . pwtc_ID . "," . pwtc_Actor . ")")
 ; Gui, Show
 Return
 
@@ -289,13 +289,13 @@ Loop, % newFileLines.MaxIndex()
 			; Call actor processing
 			if ProcessActor(curLine)
 			{
-                OutputToTargetWindow(pwt_Channel . pwtc_ID . ": linedone")
+                OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": linedone")
 				if (com_Debug)
 					Debug.WriteNL(pwtc_ID . ": line done")
 			}
 			else
 			{
-				OutputToTargetWindow(pwt_Channel . pwtc_ID . ": line ERROR")
+				OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": line ERROR")
 				if (com_Debug)
 					Debug.WriteNL(pwtc_ID . ": line ERROR")
 			}
@@ -307,7 +307,7 @@ Loop, % newFileLines.MaxIndex()
 			; Call director processing for general commands, infos and settings
 			if not ProcessDirector(curLine)
 			{
-				OutputToTargetWindow(pwt_Channel . pwtc_ID . ": line ERROR")
+				OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": line ERROR")
 				if (com_Debug)
 					Debug.WriteNL(pwtc_ID . ": line ERROR")
 			}
@@ -340,7 +340,7 @@ ProcessDirector(curLine)
 			pwtc_Actor := actorconfirmparams[2]
 			if (com_Debug)
 				Debug.WriteNL("I am now actor >" . pwtc_Actor . "<")
-			OutputToTargetWindow(pwt_Channel . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
+			OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
             ; Disable the GUI-controls for choosing actor
             GuiControl, Disable, pwtc_Actor
             GuiControl, Disable, pwtcguiar
@@ -354,7 +354,7 @@ ProcessDirector(curLine)
 	{
 		if (com_Debug)
 			Debug.WriteNL("DirectorMsg: Ready >" . pwtc_ID . "<?")
-		OutputToTargetWindow(pwt_Channel . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
+		OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
 	}
 	
 	; readycheckall -> isready(myid,actorname)
@@ -362,7 +362,7 @@ ProcessDirector(curLine)
 	{
 		if (com_Debug)
 			Debug.WriteNL("DirectorMsg: All ready check.")
-		OutputToTargetWindow(pwt_Channel . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
+		OutputToTargetWindow(pwt_Channel . " " . pwtc_ID . ": isready(" . pwtc_ID . "," . pwtc_Actor . ")")
 	}
 	
 	; actorsfree(list of untaken actors)
