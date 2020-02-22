@@ -152,7 +152,7 @@ Perform an emote. For LOTRO this gets put out as '/type'.
 ### \*freemote\*text\*
 Output a free emote. For LOTRO this gets put out as '/em text'
 ### \*stopemote\*none\*
-Some emotes, like dances, go on for a long(ish) time. This way you can stop the performance of an ongoing emote. Keep in mind that commands need some dummy parameter, which is ignored.
+Some emotes, like dances, go on for a long(ish) time. This way you can stop the performance of an ongoing emote. Keep in mind that the commands need a dummy parameter, which is ignored.
 ### \*com_channel\*i18nKey\*
 Gets the value for i18nKey for the systems locale from the ini-file and sets the output channel to that. To for instance /shout a word or send a single line to /regional. Handle with care! Only use if really necessary! Different channels may have different time-outs for spam protection within the target system. Allthough PlayWrites defaults are very chill, it is recommended to add an extra \*pause\*FewSeconds\* after having sent something to a non-standard channel.
 ### \*music\*on|off\*
