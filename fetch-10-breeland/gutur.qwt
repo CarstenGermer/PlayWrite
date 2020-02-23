@@ -1,6 +1,7 @@
 ﻿[prequest]
 qwt_Teaser = *emote*sad* Meine Laute wurde gestohlen! Mag mich jemand _mit Namen ansprechen_ und mir _helfen_? *pause*2000* *emote*sad* My lute has been stolen! Won't somebody _adress me by name_ and _help_?
 qwt_Interval = 30000
+qwt_CropTail = True
 qwt_NoCommand = *emote*shrug* Ich höre, dass Du mich ansprichst, cur_player, aber ich verstehe nicht? *pause*2000*
 aufgabe|hilfe|helfe|deutsch = qwt_goto:anfang
 quest|accept|help|english = qwt_goto:start

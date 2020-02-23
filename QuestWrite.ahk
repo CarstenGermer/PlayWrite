@@ -50,13 +50,14 @@ global qwt_Questname := ""
 global qwt_Filename := "test.qwt"
 global QWTArray := {}
 global qwt_Section := "prequest"
-global qwt_Teaser := ""
-global qwt_Interval := ""
-global qwt_NoCommand := ""
+global qwt_Teaser := "No teaser defined"
+global qwt_Interval := 30000
+global qwt_NoCommand := "No NoCommand defined"
 global qwt_RecentPlayer := ""
 global qwt_CurrentPlayer := ""
 global qwt_CurrTimestamp := ""
 global qwt_InPlay := False
+global qwt_CropTail := True
 global curLine := ""
 global PlayerNextStep := ""
 
@@ -124,9 +125,18 @@ if (com_Debug)
 
 ; set initial QWT vars, leach *.qwt
 qwt_Section := "prequest"
-qwt_Teaser := QWTfilefetch("qwt_Teaser")
-qwt_Interval := QWTfilefetch("qwt_Interval") + 1 - 1
-qwt_NoCommand := QWTfilefetch("qwt_NoCommand")
+tempval := QWTfilefetch("qwt_Teaser")
+if not (tempval = "qwt_Teaser")
+    qwt_Teaser := tempval
+tempval := QWTfilefetch("qwt_Interval")
+if not (tempval = "qwt_Interval")
+    qwt_Interval := tempval + 1 - 1
+tempval := QWTfilefetch("qwt_NoCommand")
+if not (tempval = "qwt_NoCommand")
+    qwt_NoCommand := tempval
+tempval := QWTfilefetch("qwt_CropTail")
+if not (tempval = "qwt_CropTail")
+    qwt_CropTail := tempval
 
 Gui -MaximizeBox
 Gui Add, Text, x30 y8 w60 h30 +0x200, Locale:
@@ -744,23 +754,28 @@ StopTimer()
 
 StartTimer()
 {
-    global com_Debug, qwt_Interval, cfFilePollTime, cfLastSize, cfFilename, curFile, cfLastLineAmount, OutputVar
-    ; reset cfLastSize and cfLastLineAmount cuz a lot of time may have passed
-    FileGetSize, cfLastSize, % cfFilename
-    if (ErrorLevel > 0)
+    global com_Debug, qwt_Interval, cfFilePollTime, cfLastSize, cfFilename, curFile, cfLastLineAmount, OutputVar, qwt_CropTail
+    if qwt_CropTail
     {
         if (com_Debug)
-            Debug.WriteNL("Couldn't open file " . cfFilename)
-        MsgBox, % "Couldn't open file: " . cfFilename . "<"
-        ExitApp
-    }
-    FileRead, curFile, % cfFilename
-    StringReplace, OutputVar, curFile, `n, `n, useerrorlevel
-    cfLastLineAmount := ErrorLevel + 1
-    if (com_Debug)
-    {
-        Debug.WriteNL("cf initial size: " . cfLastSize . "<")
-        Debug.WriteNL("cf initial lines: " . cfLastLineAmount . "<")
+            Debug.WriteNL("Cropping tail of " . cfFilename . " to ignore chatter.")
+        ; reset cfLastSize and cfLastLineAmount cuz a lot of time may have passed
+        FileGetSize, cfLastSize, % cfFilename
+        if (ErrorLevel > 0)
+        {
+            if (com_Debug)
+                Debug.WriteNL("Couldn't open file " . cfFilename)
+            MsgBox, % "Couldn't open file: " . cfFilename . "<"
+            ExitApp
+        }
+        FileRead, curFile, % cfFilename
+        StringReplace, OutputVar, curFile, `n, `n, useerrorlevel
+        cfLastLineAmount := ErrorLevel + 1
+        if (com_Debug)
+        {
+            Debug.WriteNL("cf initial size: " . cfLastSize . "<")
+            Debug.WriteNL("cf initial lines: " . cfLastLineAmount . "<")
+        }
     }
     if (com_Debug)
         Debug.WriteNL("Starting Timer...")
