@@ -5,7 +5,7 @@ qwt_NoCommand = *emote*shrug* Ich höre, dass Du mich ansprichst, cur_player, ab
 aufgabe|hilfe|helfe|deutsch = qwt_goto:anfang
 quest|accept|help|english = qwt_goto:start
 saytime|sagzeit = It is cur_time oclock, cur_player.
-whisperme|fluestermir = *com_channel*com_dmsg* cur_player Psst, cur_player, this message is for your ears only. *com_channel*com_say*
+whisperme|flüstermir = *com_channel*com_dmsg* cur_player Psst, cur_player, this message is for your ears only. *com_channel*com_say*
 qwt_next = anfang
 
 # ENG skript for the quest

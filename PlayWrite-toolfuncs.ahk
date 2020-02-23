@@ -51,7 +51,7 @@ i18n(msg_key, inisection := false)
 				continue
 			}
 			; Line is a (valid) key/value pair?
-			if RegExMatch(A_LoopReadLine, "^\s*(\w+)\s*=\s*(.+)", foundKeyValue)
+			if RegExMatch(A_LoopReadLine, "^\s*([^\s]+)\s*=\s*(.+)", foundKeyValue)
 			{
 				array_key = % ini_section . "-" . foundKeyValue1
 				i18nArray.Insert(array_key,foundKeyValue2)

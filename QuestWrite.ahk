@@ -20,7 +20,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory (namely _the_ dir).
 SetTitleMatchMode 2 ; For WinActivate to match title on substring search
-FileEncoding, UTF-8 ; This actually means the FILE HAS TO BE SAVED AS "UTF-8 with BOM"
+FileEncoding, UTF-8 ; According to AHKs documentation the file has to be saved as "UTF-8 with BOM" (?)
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
@@ -355,7 +355,7 @@ QWTfilefetch(msg_key, inisection := false)
 				continue
 			}
 			; Line is a (valid) key/value pair?
-			if RegExMatch(A_LoopReadLine, "^\s*([\w|]+)\s*=\s*(.+)", foundKeyValue)
+			if RegExMatch(A_LoopReadLine, "^\s*([^\s]+)\s*=\s*(.+)", foundKeyValue)
 			{
                 if (qwtfile_Debug)
                     Debug.WriteNL("  QWT file looping, key-value line : " . A_LoopReadLine . "<")
@@ -446,6 +446,11 @@ ParseCommandfile()
 
         if ( RegExMatch(curLine, cfLineClean, foundLineRaw) )
         {
+            if (com_Debug)
+            {
+                Debug.WriteNL("foundLineRaw1: " . foundLineRaw1 . "<")
+                Debug.WriteNL("foundLineRaw2: " . foundLineRaw2 . "<")
+            }
             qwt_CurrentPlayer := foundLineRaw1
             curLine := foundLineRaw2
             if (com_Debug)
