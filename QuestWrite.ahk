@@ -466,7 +466,7 @@ ParseCommandfile()
             continue
         }
         
-        ; is speaker already in list or new
+        ; speaker already in list or add new
         lv_currSection := ""
         Loop % LV_GetCount()
         {
@@ -477,8 +477,13 @@ ParseCommandfile()
                 Break
             }
         }
-        if (lv_currSection = "")
+        if (lv_currSection = "") {
             lv_currSection := "prequest"
+            qwt_CurrTimestamp = %A_NowUTC% 
+            qwt_CurrTimestamp -= 19700101000000,seconds
+            LV_Add(, qwt_CurrentPlayer, lv_currsection, qwt_CurrTimestamp)
+            qwt_Section := lv_currSection
+        }
 
         ; look for one of the keywords of the current section in curLineLow
         curKeyword := ""
@@ -499,13 +504,7 @@ ParseCommandfile()
             ProcessActor(RegExReplace(QWTfilefetch("qwt_NoCommand"), "cur_player", qwt_CurrentPlayer))
             Continue
         }
-        else if (lv_currSection = "prequest")
-        {
-            qwt_CurrTimestamp = %A_NowUTC% 
-            qwt_CurrTimestamp -= 19700101000000,seconds
-            LV_Add(, qwt_CurrentPlayer, lv_currsection, qwt_CurrTimestamp)
-            qwt_Section := lv_currSection
-        }
+
         PlayerNextStep := QWTfilefetch("qwt_next", lv_currSection)
         qwt_RecentPlayer := qwt_CurrentPlayer
         GuiControl,, qwt_RecentPlayer, % qwt_RecentPlayer
