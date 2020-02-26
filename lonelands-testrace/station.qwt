@@ -1,0 +1,41 @@
+﻿# Script for a simple test race in the Lone-Lands
+# Starting at the Forsaken Inn to the summit of Weathertop and back.
+# First marshal at the inn, reacting to "station start" and recording starting time.
+# Second marshal at the summit of Weathertop, reacting to "station gipfel" and recording that time,
+# therefore effectively having proof the contestant acutally was at the summit.
+# Third marshal back at the inn, reacting to "station ziel" and recording the time at the finish.
+# Afterwards look at the lists, check if everyone was at the summit, subtract the starting times
+# from the finish times and you got the seconds every contestant needed.
+# If you prefer to start your contestants at the same time with "3 .. 2 .. 1 .. GO!" you don't
+# need the first marshal. Check if everyone was at the summit and compare the finish times.
+# In a real competitive race, not a test, you would have one even simpler script for
+# all marshals that just reacts to "station time" (and "station zeit") recording the contestants
+# time at each marshal.
+# For longer races with many contestants it's advisable to prepare a spreadsheet to import all
+# exportet lists from the marshals, check for missed stations and calculate times automatically.
+
+[prequest]
+qwt_Teaser = Not speaking at all
+qwt_Interval = False
+qwt_CropTail = False
+qwt_NoCommand = False
+test = *com_channel*com_dmsg* cur_player cur_player, dein Test wurde erkannt und verarbeitet. Deine Startzeit wird mit "station start" erfasst. *pause*2500*
+start = qwt_goto:gestartet
+gipfel = qwt_goto:gipfel
+ziel = qwt_goto:ziel
+qwt_next = gestartet
+
+[gestartet]
+qwt_Intro = *com_channel*com_dmsg* cur_player cur_player, Du bist um cur_time gestartet! *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
+
+[gipfel]
+qwt_Intro = *com_channel*com_dmsg* cur_player cur_player, Du hast um cur_time den Gipfel erreicht! *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
+
+[ziel]
+qwt_Intro = *com_channel*com_dmsg* cur_player Gratulation cur_player! Du bist um cur_time im Ziel angekommen! *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
