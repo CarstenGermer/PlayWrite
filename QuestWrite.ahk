@@ -51,8 +51,8 @@ global qwt_Filename := "test.qwt"
 global QWTArray := {}
 global qwt_Section := "prequest"
 global qwt_Teaser := "No teaser defined"
-global qwt_Interval := 30000
-global qwt_NoCommand := "No NoCommand defined"
+global qwt_Interval := 0
+global qwt_NoCommand := "False"
 global qwt_RecentPlayer := ""
 global qwt_CurrentPlayer := ""
 global qwt_CurrTimestamp := ""
@@ -135,8 +135,12 @@ tempval := QWTfilefetch("qwt_NoCommand")
 if not (tempval = "qwt_NoCommand")
     qwt_NoCommand := tempval
 tempval := QWTfilefetch("qwt_CropTail")
-if not (tempval = "qwt_CropTail")
-    qwt_CropTail := tempval
+if not (tempval = "qwt_CropTail") {
+    if (tempval = "False")
+        qwt_CropTail := False
+    else
+        qwt_CropTail := tempval
+}
 
 Gui -MaximizeBox
 Gui Add, Text, x30 y8 w60 h30 +0x200, Locale:
@@ -166,7 +170,8 @@ Gui Show, w630 h420, QuestWrite
 SetTimer, ParseCommandfile, % cfFilePollTime
 
 ; Start timer for output of teaser
-SetTimer, ProcessTeaser, % qwt_Interval
+if (qwt_Interval)
+    SetTimer, ProcessTeaser, % qwt_Interval
 
 ; All done, now it's up to timers, GUI-events and new lines in the chatlog
 Return
@@ -319,10 +324,12 @@ Return ; Just in case the user finds a way to dismiss the box w/o choosing...
 
 ProcessTeaser()
 {
-    global qwt_Teaser
-    SetTimer, ProcessTeaser, Off
-    ProcessActor(qwt_Teaser)
-    SetTimer, ProcessTeaser, % qwt_Interval
+    global qwt_Teaser, qwt_Interval
+    if (qwt_Interval) {
+        SetTimer, ProcessTeaser, Off
+        ProcessActor(qwt_Teaser)
+        SetTimer, ProcessTeaser, % qwt_Interval
+    }
 }
 
 ; Leaching *.qwt into variables
@@ -391,7 +398,7 @@ QWTfilefetch(msg_key, inisection := false)
 ParseCommandfile()
 {
 	; make globals accessible to this function
-	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1
+	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1, qwt_NoCommand
     global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep
     global curFile, cfCurrentLineAmount, cfLastLineAmount, lv_currClient, lv_currSection
     curLineLow := ""
@@ -516,7 +523,9 @@ ParseCommandfile()
 
         if (curKeyword = "")
         {
-            ProcessActor(RegExReplace(QWTfilefetch("qwt_NoCommand"), "cur_player", qwt_CurrentPlayer))
+            qwt_NoCommand := QWTfilefetch("qwt_NoCommand")
+            if not (qwt_NoCommand = "False")
+                ProcessActor(RegExReplace(qwt_NoCommand, "cur_player", qwt_CurrentPlayer))
             Continue
         }
 
@@ -755,7 +764,7 @@ StopTimer()
 StartTimer()
 {
     global com_Debug, qwt_Interval, cfFilePollTime, cfLastSize, cfFilename, curFile, cfLastLineAmount, OutputVar, qwt_CropTail
-    if qwt_CropTail
+    if (qwt_CropTail)
     {
         if (com_Debug)
             Debug.WriteNL("Cropping tail of " . cfFilename . " to ignore chatter.")
@@ -779,7 +788,8 @@ StartTimer()
     }
     if (com_Debug)
         Debug.WriteNL("Starting Timer...")
-    SetTimer, ProcessTeaser, % qwt_Interval
+    if (qwt_Interval)
+        SetTimer, ProcessTeaser, % qwt_Interval
     SetTimer, ParseCommandfile, % cfFilePollTime
     Return
 }

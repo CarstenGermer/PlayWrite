@@ -232,16 +232,16 @@ While the quest-handler is performing she or he is not able to process new reque
 Tags the beginning of a section or step in this quest.
 ### [prequest]
 Is a reserved section and is processed when new/additional players communicate with you by saying your roles name who are not already set as being in a section.
-### (only in [prequest]) qwt_interval = milliseconds
-Time in milliseconds between performances of qwt_teaser.
-### (only in [prequest]) qwt_croptail = True|False
+### (only in [prequest] and global) qwt_croptail = True|False
 Wether or not to re-initialize the length of chatlog with participants spoken lines. If there's some longer (> few secs) performances as answer to some of the keywords leave this out or set to True. If you need very fast, quasi parallel processing of participants request with almost no reaction from the questgiver (eg as station in a rally) set to False.
 ### (only in [prequest]) qwt_teaser = line to perform
 This line is performed at an interval to tease new / additional players into talking to you.
+### (only in [prequest]) qwt_interval = milliseconds|False
+Time in milliseconds between performances of qwt_teaser. Set this to False to not process teaser at all.
 ### qwt_Intro = line to perform
 Line to perform once a player advances to this section.
-### qwt_NoCommand = line to perform
-Line to perform if the system recognizes a player talking to you but does not recognize any of the keywords of that players current section.
+### qwt_NoCommand = line to perform|False
+Line to perform if the system recognizes a player talking to you but does not recognize any of the keywords of that players current section. Set this to False to not react to lines without discernable command at all.
 ### qwt_next = section name
 This is the name of the section a player gets advanced to when you click the 'Next Step' button
 ### keyword(|keyword2|keyword3...) = line to perform
