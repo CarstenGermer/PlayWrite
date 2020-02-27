@@ -31,9 +31,9 @@ Obviously...
 ### If you use language specific characters in your play, you need to save the file as UTF-8
 AutoHotkeys documentation is a bit unclear about that atm. I'd say, save as 'UTF-8 with BOM' and test.
 ## About PlayWrite
-PlayWrite is a system to support solo or multi-actor player-run performances in LOTRO. It reads textfiles containing a play or sketch that's written in human-readable syntax and outputs the included text and commands to the target system or passes them on to the respective clients (performers). For plays with many performers all communication between server and client(s) is sent via the ingame chat-channels and read by tailing a chat-log of that channel.
+PlayWrite is a system to support solo or multi-actor player-run performances in LOTRO. It reads textfiles containing a play or sketch that's written in human-readable syntax and outputs the included text and commands to the target system or passes them on to the respective clients (performers). For plays with many performers all communication between server and client(s) is sent via the ingame chat-channels and read by tailing a chat log of that channel.
 ## About QuestWrite
-QuestWrite is a similar system for player-run quests and utilizes the same systems for explanations, story etc. It reads a chat-log of a general chat-channel and recognizes it's structure and keywords. Multi-stage quests are realized as multiple single quests that are chained together by story and tokens given out.
+QuestWrite is a similar system for player-run quests and utilizes the same systems for explanations, story etc. It reads a chat log of a general chat-channel and recognizes it's structure and keywords. Multi-stage quests are realized as multiple single quests that are chained together by story and tokens given out.
 ## Other target systems / games
 I developed PlayWrite and QuestWrite as standalone systems that are largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
 ## Installation
@@ -176,9 +176,9 @@ This recipe is for LOTRO in particular and assumes none of the defaults have bee
 - All participating need to be in a fellowship.
 - All participating have a separate chat-tab for 'fellow' and ideally for 'fellow' only.
 - All participating need to have started a chat log of this 'fellow' chat-tab.
-- The director starts the PlayWrite-server.ahk script and selects the chat-log and the play.pwt that is to be performed.
+- The director starts the PlayWrite-server.ahk script and selects the chat log and the play.pwt that is to be performed.
 - If needed, the director sets the language of his or her installation of the target system / game.
-- All participating clients start PlayWrite-client.ahk and select the chat-log.
+- All participating clients start PlayWrite-client.ahk and select the chat log.
 - If needed, the clients set the language of their individual installation of the target system / game.
 - The director sends a list of available actors.
 - The clients choose their individual role from the dropdown and request them to be acknowledged by the director.
@@ -207,7 +207,7 @@ As soon as QuestWrite identifies players interacting with you by saying your nam
 ### Last interaction with
 The name of the last player interacting with you.
 ### Button 'Player Name'
-Pressing this button highlights the particular player in the list, as this list might get long.
+Pressing this button highlights the particular player in the list, which might get long.
 ### Next Step
 If a player is chosen in the list, this button advances the player to the next section of the quest. Use this for example to advance the player to the next section after she or he handed you some items you want the players to collect.
 ### Remove
@@ -224,9 +224,9 @@ See PlayWrite documentation.
 This is where your magic happens!
 I feel I can't write much more than you hopefully understand by reading the examples I provided but I'll try...
 ## Strong advice
-See above. Basically all advice for PLAY.pwt file(s) also applies for writing quest.qwt files.
+See above. Basically all advice for PLAY.pwt file(s) also applies for writing QUEST.qwt files.
 ### Keep lines the quest-handler performs extra snappy!
-While the quest-handler is performing she or he is not able to process new requests. Requests that may be coming in while performing will be ignored. Try to keep story, drama and explanation as short as possible.
+While the quest-handler is performing she or he is not able to process new requests. Requests that may be coming in while performing will be ignored or delayed. Try to keep story, drama and explanation as short as possible.
 ## List of commands
 ### [section name]
 Tags the beginning of a section or step in this quest.
@@ -259,9 +259,10 @@ Basically all command from *.pwt files can be used in performing-lines. Test the
 # How To Solo
 This recipe is for LOTRO in particular and assumes none of the defaults have been changed.
 - Have a separate chat-tab for 'say' and ideally for 'say' only.
+- If you want exact times in the list, for e.g. races, have your chat-timestamps switched on in the options.
 - Have a chat log of this 'say' chat-tab started.
 - Start QuestWrite.ahk
-- Select the chat-log and the rolename.qwt you want to perform.
+- Select the active chat log and the rolename.qwt you want to perform.
 - Wait for players starting to interact with you.
 - If there's a part in your quest where players need to give or show you certain items you need to do that manually by using the mouse and need to manually advance the player to the next section using the GUI.
 - Enjoy the puzzled looks and frustration when people are trying to figure out how it works ;)

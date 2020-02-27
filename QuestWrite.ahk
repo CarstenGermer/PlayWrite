@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 20200221 Beta
+    Version 20200227 Beta
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -242,14 +242,13 @@ PlayerNextStep:
 if (PlayerNextStep = "none")
     Return
 qwt_Section := PlayerNextStep
+FormatTime, qwt_CurrTimestamp,, hh:mm:ss tt
 Loop % LV_GetCount()
 {
     LV_GetText(lv_currClient, A_Index, 1)
     if (lv_currClient = qwt_CurrentPlayer)
     {
         LV_Modify(A_Index , "Col2", qwt_Section)
-        qwt_CurrTimestamp = %A_NowUTC% 
-        qwt_CurrTimestamp -= 19700101000000,seconds
         LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
         Break
     }
@@ -258,7 +257,8 @@ PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
 GuiControl,, PlayerNextStep, % PlayerNextStep
 curLine := QWTfilefetch("qwt_intro", qwt_Section)
 curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
-curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
+curLine := RegExReplace(curLine, "cur_time", qwt_CurrTimestamp)
+
 StopTimer()
 ProcessActor(curLine)
 StartTimer()
@@ -399,7 +399,7 @@ ParseCommandfile()
 {
 	; make globals accessible to this function
 	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1, qwt_NoCommand
-    global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep
+    global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep, qwt_CurrTimestamp
     global curFile, cfCurrentLineAmount, cfLastLineAmount, lv_currClient, lv_currSection
     curLineLow := ""
     qwt_play := ""
@@ -461,6 +461,16 @@ ParseCommandfile()
             continue
         }
 
+        ; cut timestamp and space out of line if present
+        ; [02/27 04:16:30 AM] Hans says: 'station test'
+        if ( RegExMatch(curLine, "^\[\d\d\/\d\d\s(\d\d:\d\d:\d\d\s\w\w)\]\s", foundTime) ) {
+            qwt_CurrTimestamp := foundTime1
+            curLine := RegExReplace(curLine, "^\[\d\d\/\d\d\s(\d\d:\d\d:\d\d\s\w\w)\]\s")
+        }
+        else {
+            FormatTime, qwt_CurrTimestamp,, hh:mm:ss tt
+        }
+        
         if ( RegExMatch(curLine, cfLineClean, foundLineRaw) )
         {
             if (com_Debug)
@@ -501,8 +511,6 @@ ParseCommandfile()
         }
         if (lv_currSection = "") {
             lv_currSection := "prequest"
-            qwt_CurrTimestamp = %A_NowUTC% 
-            qwt_CurrTimestamp -= 19700101000000,seconds
             LV_Add(, qwt_CurrentPlayer, lv_currsection, qwt_CurrTimestamp)
             qwt_Section := lv_currSection
         }
@@ -538,7 +546,7 @@ ParseCommandfile()
         GuiControl, Enable, PlayerRemove
         
         curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
-        curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
+        curLine := RegExReplace(curLine, "cur_time", qwt_CurrTimestamp)
 
         if (RegExMatch(curLine, "qwt_play:(.+\.\w+)", qwt_play))
         {
@@ -586,8 +594,6 @@ ParseCommandfile()
                 if (lv_currClient = qwt_CurrentPlayer)
                 {
                     LV_Modify(A_Index , "Col2", qwt_Section)
-                    qwt_CurrTimestamp = %A_NowUTC% 
-                    qwt_CurrTimestamp -= 19700101000000,seconds
                     LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
                     Break
                 }
@@ -597,7 +603,7 @@ ParseCommandfile()
             GuiControl,, PlayerNextStep, % PlayerNextStep
             curLine := QWTfilefetch("qwt_intro", qwt_Section)
             curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
-            curLine := RegExReplace(curLine, "cur_time", A_Hour . ":" . A_Min . ":" . A_Sec)
+            curLine := RegExReplace(curLine, "cur_time", qwt_CurrTimestamp)
             ProcessActor(curLine)
         }
         
