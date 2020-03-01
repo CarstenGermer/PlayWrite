@@ -1,0 +1,24 @@
+﻿# Script for all stations/marshals in any race.
+# If you want the marshals to react to "marshal" instead of "station" just rename this script.
+# It's advisable to prepare a spreadsheet for importing all exported lists from all marshals,
+# check for missed stations and calculate times automatically.
+
+[prequest]
+qwt_Teaser = Not speaking at all
+qwt_Interval = False
+qwt_CropTail = False
+qwt_NoCommand = False
+test = *com_channel*com_dmsg* cur_player recognized at cur_time. *pause*2500*
+time = qwt_goto:timed
+zeit = qwt_goto:gestoppt
+qwt_next = none
+
+[timed]
+qwt_Intro = *com_channel*com_dmsg* cur_player timed at cur_time! *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
+
+[gestoppt]
+qwt_Intro = *com_channel*com_dmsg* cur_player cur_player um cur_time erfasst! *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
