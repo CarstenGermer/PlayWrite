@@ -203,15 +203,15 @@ The name of the quest as taken from the directory name your myquest.qwt is in.
 ### Role
 Your role and name, used by players to address and interact with you. It's taken from the name of the myquest.qwt.
 ### Table of players name and their current section of the quest
-As soon as QuestWrite identifies players interacting with you by saying your name in general chat it stores the players name together with the information which section of the quest this player is in.
+As soon as QuestWrite identifies players interacting with you by saying your name in general chat it stores the players name together with the information which section of the quest this player is in. You can double-click a line in this list to set the information for the following three buttons.
 ### Last interaction with
 The name of the last player interacting with you.
 ### Button 'Player Name'
-Pressing this button highlights the particular player in the list, which might get long.
+Pressing this button highlights that particular player in the list, which might get long.
 ### Next Step
-If a player is chosen in the list, this button advances the player to the next section of the quest. Use this for example to advance the player to the next section after she or he handed you some items you want the players to collect.
+This button advances the player from 'last interaction with' to the next section of the quest. Use this for example to advance the player to the next section after she or he handed you some items you wanted the players to collect.
 ### Remove
-This removes the player from the list completely. This might be desired if the player accidentally chose a wrong language or something.
+This removes the player from 'last interaction with' from the list completely. This might be desired if the player accidentally chose a wrong language or something.
 ### Key "Pause"
 Pressing the Pause-key on your keyboard pauses processing of the current *.qwt or *.pwt. This is helpful if you need to text-chat during an ongoing event.
 ### ONLY during optional *.pwt : Number of lines in Play
@@ -238,6 +238,8 @@ Wether or not to re-initialize the length of chatlog with participants spoken li
 This line is performed at an interval to tease new / additional players into talking to you.
 ### (only in [prequest]) qwt_interval = milliseconds|False
 Time in milliseconds between performances of qwt_teaser. Set this to False to not process teaser at all.
+### qwt_LootCheck = True|False (defaults to False)
+If you want to do a lootcheck in **this** section, include this parameter as true. All keywords in this section will be **only** checked against the loot messages items recognized in the chat log.
 ### qwt_Intro = line to perform
 Line to perform once a player advances to this section.
 ### qwt_NoCommand = line to perform|False

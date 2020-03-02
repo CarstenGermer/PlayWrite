@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 20200227 Beta
+    Version 202003.0.0
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -58,6 +58,7 @@ global qwt_CurrentPlayer := ""
 global qwt_CurrTimestamp := ""
 global qwt_InPlay := False
 global qwt_CropTail := True
+global qwt_LootCheck := False
 global curLine := ""
 global PlayerNextStep := ""
 
@@ -141,6 +142,15 @@ if not (tempval = "qwt_CropTail") {
     else
         qwt_CropTail := tempval
 }
+tempval := QWTfilefetch("qwt_LootCheck")
+if not (tempval = "qwt_LootCheck") {
+    if (tempval = "False")
+        qwt_LootCheck := False
+    else {
+        qwt_LootCheck := tempval
+        cfLineClean := i18n("cfLineCleanQWTloot", "System")
+    }
+}
 
 Gui -MaximizeBox
 Gui Add, Text, x30 y8 w60 h30 +0x200, Locale:
@@ -211,7 +221,9 @@ IfMsgBox Yes, {
         if (lv_currClient = qwt_RecentPlayer)
         {
             LV_Delete(A_Index)
+            GuiControl,, qwt_RecentPlayer, Player Name
             GuiControl, Disable, qwt_RecentPlayer
+            GuiControl,, PlayerNextStep, Next Step
             GuiControl, Disable, PlayerNextStep
             GuiControl, Disable, PlayerRemove
             Break
@@ -227,7 +239,7 @@ if A_GuiEvent = DoubleClick
     {
         LV_GetText(qwt_RecentPlayer, A_EventInfo, 1)
         LV_GetText(qwt_Section, A_EventInfo, 2)
-        PlayerNextStep := QWTfilefetch("qwt_next", lv_currSection)
+        PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
         qwt_CurrentPlayer := qwt_RecentPlayer
         GuiControl,, qwt_RecentPlayer, % qwt_RecentPlayer
         GuiControl,, PlayerNextStep, % PlayerNextStep
@@ -255,6 +267,17 @@ Loop % LV_GetCount()
 }
 PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
 GuiControl,, PlayerNextStep, % PlayerNextStep
+cfLineClean := i18n("cfLineCleanQWT", "System")
+tempval := QWTfilefetch("qwt_LootCheck", qwt_Section)
+if not (tempval = "qwt_LootCheck") {
+    if (tempval = "False") {
+        qwt_LootCheck := False
+    }
+    else {
+        qwt_LootCheck := tempval
+        cfLineClean := i18n("cfLineCleanQWTloot", "System")
+    }
+}
 curLine := QWTfilefetch("qwt_intro", qwt_Section)
 curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
 curLine := RegExReplace(curLine, "cur_time", qwt_CurrTimestamp)
@@ -372,7 +395,7 @@ QWTfilefetch(msg_key, inisection := false)
 				continue
 			}
 			; Line is a (valid) key/value pair?
-			if RegExMatch(A_LoopReadLine, "^\s*([^\s]+)\s*=\s*(.+)", foundKeyValue)
+			if RegExMatch(A_LoopReadLine, "^\s*(.+)\s+=\s*(.+)", foundKeyValue)
 			{
                 if (qwtfile_Debug)
                     Debug.WriteNL("  QWT file looping, key-value line : " . A_LoopReadLine . "<")
@@ -398,7 +421,7 @@ QWTfilefetch(msg_key, inisection := false)
 ParseCommandfile()
 {
 	; make globals accessible to this function
-	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1, qwt_NoCommand
+	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1, qwt_NoCommand, tempval
     global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep, qwt_CurrTimestamp
     global curFile, cfCurrentLineAmount, cfLastLineAmount, lv_currClient, lv_currSection
     curLineLow := ""
@@ -453,16 +476,7 @@ ParseCommandfile()
         ; make curLine all lowercase
         StringLower, curLineLow, curLine
         
-        ; if we are not adressed, dismiss
-        if not (RegExMatch(curLineLow, qwt_Actor))
-        {
-            if (com_Debug)
-                Debug.WriteNL("can't find my name in line, dismissing.")
-            continue
-        }
-
         ; cut timestamp and space out of line if present
-        ; [02/27 04:16:30 AM] Hans says: 'station test'
         if ( RegExMatch(curLine, "^\[\d\d\/\d\d\s(\d\d:\d\d:\d\d\s\w\w)\]\s", foundTime) ) {
             qwt_CurrTimestamp := foundTime1
             curLine := RegExReplace(curLine, "^\[\d\d\/\d\d\s(\d\d:\d\d:\d\d\s\w\w)\]\s")
@@ -471,6 +485,17 @@ ParseCommandfile()
             FormatTime, qwt_CurrTimestamp,, hh:mm:ss tt
         }
         
+        ; if we are not checking for loot
+        if not (qwt_LootCheck) {
+            ; if we are not adressed, dismiss
+            if not (RegExMatch(curLineLow, qwt_Actor))
+            {
+                if (com_Debug)
+                    Debug.WriteNL("can't find my name in line, dismissing.")
+                continue
+            }
+        }
+
         if ( RegExMatch(curLine, cfLineClean, foundLineRaw) )
         {
             if (com_Debug)
@@ -601,6 +626,17 @@ ParseCommandfile()
             ; button next neu
             PlayerNextStep := QWTfilefetch("qwt_next", qwt_section)
             GuiControl,, PlayerNextStep, % PlayerNextStep
+            cfLineClean := i18n("cfLineCleanQWT", "System")
+            tempval := QWTfilefetch("qwt_LootCheck", qwt_Section)
+            if not (tempval = "qwt_LootCheck") {
+                if (tempval = "False") {
+                    qwt_LootCheck := False
+                }
+                else {
+                    qwt_LootCheck := tempval
+                    cfLineClean := i18n("cfLineCleanQWTloot", "System")
+                }
+            }
             curLine := QWTfilefetch("qwt_intro", qwt_Section)
             curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
             curLine := RegExReplace(curLine, "cur_time", qwt_CurrTimestamp)

@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 20200203 Beta
+    Version 202003.0.0
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
