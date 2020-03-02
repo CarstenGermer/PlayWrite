@@ -1,6 +1,4 @@
 PlayWrite / QuestWrite, copyright 2020 by Carsten Germer
-
-v202003.0.0
     
 This program is free software. It comes without any warranty, to
 the extent permitted by applicable law. You can redistribute it
