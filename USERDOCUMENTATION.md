@@ -202,8 +202,8 @@ The language of your target system (Did you install LOTRO in English, German, Fr
 The name of the quest as taken from the directory name your myquest.qwt is in.
 ### Role
 Your role and name, used by players to address and interact with you. It's taken from the name of the myquest.qwt.
-### Table of players name and their current section of the quest
-As soon as QuestWrite identifies players interacting with you by saying your name in general chat it stores the players name together with the information which section of the quest this player is in. You can double-click a line in this list to set the information for the following three buttons.
+### Table of players name. current section of the quest and time they advanced to that
+As soon as QuestWrite identifies players interacting with you by saying your name in general chat the players name together with the information which section of the quest this player is in and the time at which they advanced to that section is stored and displayed here. You can double-click a line in this list to set the information for the following three buttons. QuestWrite stores a history of participants interactions in memory and writes info to file on export.
 ### Last interaction with
 The name of the last player interacting with you.
 ### Button 'Player Name'
@@ -220,6 +220,10 @@ See PlayWrite documentation.
 See PlayWrite documentation.
 ### ONLY during optional *.pwt : Play / Pause Button
 See PlayWrite documentation.
+### Button "Load List"
+Load a previously saved or prepared CSV file with participants names, stages and times into QuestWrite.
+### Button "Save List"
+Save the data of all participants, names, stages and times to a CSV file.
 # QUEST.qwt file(s)
 This is where your magic happens!
 I feel I can't write much more than you hopefully understand by reading the examples I provided but I'll try...
@@ -246,6 +250,8 @@ Line to perform once a player advances to this section.
 Line to perform if the system recognizes a player talking to you but does not recognize any of the keywords of that players current section. Set this to False to not react to lines without discernable command at all.
 ### qwt_next = section name
 This is the name of the section a player gets advanced to when you click the 'Next Step' button
+### qwt_timegap = seconds
+How many seconds have to pass before QuestWrite accepts a trigger from the specific participant to be enhanced to the next stage. A tarpit like this is helful for players who try to be clever and just spam all known triggers in short succession.
 ### keyword(|keyword2|keyword3...) = line to perform
 One or more keywords which are looked for if a player talk to you by saying your roles name. The first on that is found in the players talk will be executed.
 ### cur_player
@@ -256,6 +262,8 @@ A special keyword in performing-lines that gets replaced by the hh:mm:ss current
 A special keyword:parameter in performing-lines that advances the player automatically to the named section.
 ### qwt_remove
 A special keyword in performing-lines that removes the player from the table completely. Doing this allows the player to repeat the quest from the beginning.
+### qwt_invite
+A special keyword in performing lines that invites the player who triggered the reaction in to your group (LOTRO fellowship or raid). This is necessary for loot-checks as the LOTRO chat is able to output "Loot (fellowship)" and not from any player in the general vicinity.
 ### playwrite.pwt commands
 Basically all command from *.pwt files can be used in performing-lines. Test the more involved one like playing synced music at your own peril.
 # How To Solo

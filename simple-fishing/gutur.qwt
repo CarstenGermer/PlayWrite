@@ -1,0 +1,142 @@
+﻿# This is a simple fishing quest to illustrate how to do a "loot race".
+# Ideally have "Enable timestamps on chat" set in Options->Chat.
+# Have a chat-tab which displays "/say" and "Loot (Fellows)" and start a chat-log for that tab.
+# Start QuestWrite, choose the chat-log and this .qwt (rename it to your name to avoid confusion).
+# Players who "/say yourname fishing" will start the quest.
+# QuestWrite will automatically invite anyone who starts the quest into fellowship!
+# If you expect more then six people participating, turn the fellowship into a raidgroup.
+# If you want more then 24 people to do the quest simultanously you would need to set up more than one steward.
+# QuestWrite internally keeps track of the time each participant entered each stage of the quest,
+# After you end the event, export the participants data to a CSV file, load into your favourite spreadsheet, calculate finisheing times minus start times, step 3 - profit.
+
+
+[prequest]
+qwt_Teaser = *emote*cheer* Angelwettbewerb! Sage "Gutur angeln" um zu starten.*pause*2000* *emote*cheer* Fishing contest! Say "Gutur fishing" to start!
+qwt_Interval = 30000
+qwt_CropTail = False
+qwt_NoCommand = *com_channel*com_dmsg* Zum starten sage Gutur angeln. To start say Gutur fishing. *pause*2500*
+fishing = qwt_goto:started
+angeln = qwt_goto:gestartet
+qwt_next = none
+
+# ENG skript for the quest
+
+[started]
+qwt_Intro = *com_channel*com_dmsg* cur_player Quickl as you can! Catch one Catfish, one Dace and one Minnow! qwt_invite *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+catfish = qwt_goto:steptwocatfish
+dace = qwt_goto:steptwodace
+minnow = qwt_goto:steptwominnow
+qwt_next = none
+
+[steptwocatfish]
+qwt_Intro = *com_channel*com_dmsg* cur_player One Dace and one Minnow left! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+dace = qwt_goto:stepthreeminnow
+minnow = qwt_goto:stepthreedace
+qwt_next = none
+
+[steptwodace]
+qwt_Intro = *com_channel*com_dmsg* cur_player One Catfish and one Minnow left! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+catfish = qwt_goto:stepthreeminnow
+minnow = qwt_goto:stepthreecatfish
+qwt_next = none
+
+[steptwominnow]
+qwt_Intro = *com_channel*com_dmsg* cur_player One Catfish and one Dace left! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+catfish = qwt_goto:stepthreedace
+dace = qwt_goto:stepthreecatfish
+qwt_next = none
+
+[stepthreecatfish]
+qwt_Intro = *com_channel*com_dmsg* cur_player Only a Catfish left to catch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+catfish = qwt_goto:allcaught
+qwt_next = none
+
+[stepthreedace]
+qwt_Intro = *com_channel*com_dmsg* cur_player Only a Dace left to catch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+dace = qwt_goto:allcaught
+qwt_next = none
+
+[stepthreeminnow]
+qwt_Intro = *com_channel*com_dmsg* cur_player Only a Minnow left to catch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+minnow = qwt_goto:allcaught
+qwt_next = none
+
+[allcaught]
+qwt_Intro = *com_channel*com_dmsg* cur_player Congratulation cur_player, you have caught everything at cur_time! Your time is recorded, you can leave the fellowship now. *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
+
+# DEU Skript für die Aufgabe
+
+[gestartet]
+qwt_Intro = *com_channel*com_dmsg* cur_player So schnell Du kannst! Fange einen Zwergwels, einen Weissfisch und eine Elritze! qwt_invite *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+zwergwels = qwt_goto:steptwozwergwels
+weissfisch = qwt_goto:steptwoweissfisch
+elritze = qwt_goto:steptwoelritze
+qwt_next = none
+
+[steptwozwergwels]
+qwt_Intro = *com_channel*com_dmsg* cur_player Ein Weissfisch und eine Elritze noch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+weissfish = qwt_goto:stepthreeelritze
+elritze = qwt_goto:stepthreeweissfisch
+qwt_next = none
+
+[steptwoweissfisch]
+qwt_Intro = *com_channel*com_dmsg* cur_player Ein Zwergwels und eine Elritze noch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+zwergwels = qwt_goto:stepthreeelritze
+elritze = qwt_goto:stepthreezwergwels
+qwt_next = none
+
+[steptwoelritze]
+qwt_Intro = *com_channel*com_dmsg* cur_player Ein Zwergwels und ein Weissfisch noch! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+zwergwels = qwt_goto:stepthreeweissfisch
+weissfisch = qwt_goto:stepthreezwergwels
+qwt_next = none
+
+[stepthreezwergwels]
+qwt_Intro = *com_channel*com_dmsg* cur_player Nur ein Zwergwels noch zu fangen! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+zwergwels = qwt_goto:allesgefangen
+qwt_next = none
+
+[stepthreeweissfisch]
+qwt_Intro = *com_channel*com_dmsg* cur_player Nur ein Weissfisch noch zu fangen! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+weissfisch = qwt_goto:allesgefangen
+qwt_next = none
+
+[stepthreeminnow]
+qwt_Intro = *com_channel*com_dmsg* cur_player Nur eine Elritze noch zu fangen! *pause*2500*
+qwt_NoCommand = False
+qwt_LootCheck = True
+elritze = qwt_goto:allesgefangen
+qwt_next = none
+
+[allesgefangen]
+qwt_Intro = *com_channel*com_dmsg* cur_player Herzlichen Glückwunsch cur_player, um cur_time hast Du alles gefangen! Deine Zeiten sind notiert, du kannst die Gruppe jetzt verlassen. *pause*2500*
+qwt_NoCommand = False
+qwt_next = none
