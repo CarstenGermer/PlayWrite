@@ -304,7 +304,7 @@ if (RegExMatch(curLine, "qwt_invite")) {
     curLine := RegExReplace(curLine, "qwt_invite")
     if (com_Debug)
         Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
-    OutputToTargetWindow("/" . i18n("com_invite") . " " . qwt_CurrentPlayer)
+    OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
 }
 
 StopTimer()
@@ -721,7 +721,7 @@ ParseCommandfile()
                 curLine := RegExReplace(curLine, "qwt_invite")
                 if (com_Debug)
                     Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
-                OutputToTargetWindow("/" . i18n("com_invite") . " " . qwt_CurrentPlayer)
+                OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
             }
             ProcessActor(curLine)
         }
@@ -749,7 +749,7 @@ ParseCommandfile()
         {
             if (com_Debug)
                 Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
-            OutputToTargetWindow("/" . i18n("com_invite") . " " . qwt_CurrentPlayer)
+            OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
         }
     }
     if (com_Debug)

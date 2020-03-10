@@ -21,7 +21,7 @@ qwt_next = none
 # ENG skript for the quest
 
 [preparation]
-qwt_Intro = *com_channel*com_dmsg* Accept the invite and once you're in group you can start your time with "/say Gutur start" qwt_invite *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Accept the invite and once you're in group you can start your time with '/say Gutur start'. qwt_invite *pause*2500*
 qwt_NoCommand = False
 start = qwt_goto:started
 invite|reinvite = qwt_goto:reinvite
@@ -95,7 +95,7 @@ qwt_next = none
 # DEU Skript für die Aufgabe
 
 [vorbereitung]
-qwt_Intro = *com_channel*com_dmsg* Nimm die Einladung an und wenn Du in der Gruppe bist kannst Du die Zeit mit "/sage Gutur start" starten. qwt_invite *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Nimm die Einladung an und wenn Du in der Gruppe bist kannst Du die Zeit mit '/sage Gutur start' starten. qwt_invite *pause*2500*
 qwt_NoCommand = False
 start = qwt_goto:gestartet
 einladen|neueinladen = qwt_goto:neueinladen
