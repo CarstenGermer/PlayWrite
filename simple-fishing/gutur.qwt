@@ -7,22 +7,34 @@
 # If you expect more then six people participating, turn the fellowship into a raidgroup.
 # If you want more then 24 people to do the quest simultanously you would need to set up more than one steward.
 # QuestWrite internally keeps track of the time each participant entered each stage of the quest,
-# After you end the event, export the participants data to a CSV file, load into your favourite spreadsheet, calculate finisheing times minus start times, step 3 - profit.
-
+# After you end the event, export the participants data to a CSV file, load into your favourite spreadsheet, calculate finishing times minus start times, step 3 - profit.
 
 [prequest]
-qwt_Teaser = *emote*cheer* Angelwettbewerb! Sage "Gutur angeln" um zu starten.*pause*2000* *emote*cheer* Fishing contest! Say "Gutur fishing" to start!
-qwt_Interval = 30000
+qwt_Teaser = Not speaking at all
+qwt_Interval = False
 qwt_CropTail = False
-qwt_NoCommand = *com_channel*com_dmsg* Zum starten sage Gutur angeln. To start say Gutur fishing. *pause*2500*
-fishing = qwt_goto:started
-angeln = qwt_goto:gestartet
+qwt_NoCommand = False
+fishing = qwt_goto:preparation
+angeln = qwt_goto:vorbereitung
 qwt_next = none
 
 # ENG skript for the quest
 
+[preparation]
+qwt_Intro = *com_channel*com_dmsg* Accept the invite and once you're in group you can start your time with "/say Gutur start" qwt_invite *pause*2500*
+qwt_NoCommand = False
+start = qwt_goto:started
+invite|reinvite = qwt_goto:reinvite
+qwt_next = none
+
+[reinvite]
+qwt_Intro = qwt_invite qwt_goto:preparation
+qwt_NoCommand = False
+qwt_Timegap = 20
+qwt_next = none
+
 [started]
-qwt_Intro = *com_channel*com_dmsg* cur_player Quickl as you can! Catch one Catfish, one Dace and one Minnow! qwt_invite *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Catch one Catfish, one Dace and one Minnow! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
 catfish = qwt_goto:steptwocatfish
@@ -76,14 +88,27 @@ minnow = qwt_goto:allcaught
 qwt_next = none
 
 [allcaught]
-qwt_Intro = *com_channel*com_dmsg* cur_player Congratulation cur_player, you have caught everything at cur_time! Your time is recorded, you can leave the fellowship now. *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Congratulation cur_player, you have caught everything at cur_time! Your time is recorded, you can leave the group. *pause*2500*
 qwt_NoCommand = False
 qwt_next = none
 
 # DEU Skript für die Aufgabe
 
+[vorbereitung]
+qwt_Intro = *com_channel*com_dmsg* Nimm die Einladung an und wenn Du in der Gruppe bist kannst Du die Zeit mit "/sage Gutur start" starten. qwt_invite *pause*2500*
+qwt_NoCommand = False
+start = qwt_goto:gestartet
+einladen|neueinladen = qwt_goto:neueinladen
+qwt_next = none
+
+[neueinladen]
+qwt_Intro = qwt_invite qwt_goto:vorbereitung
+qwt_NoCommand = False
+qwt_Timegap = 20
+qwt_next = none
+
 [gestartet]
-qwt_Intro = *com_channel*com_dmsg* cur_player So schnell Du kannst! Fange einen Zwergwels, einen Weissfisch und eine Elritze! qwt_invite *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Fange einen Zwergwels, einen Weissfisch und eine Elritze! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
 zwergwels = qwt_goto:steptwozwergwels
@@ -137,6 +162,6 @@ elritze = qwt_goto:allesgefangen
 qwt_next = none
 
 [allesgefangen]
-qwt_Intro = *com_channel*com_dmsg* cur_player Herzlichen Glückwunsch cur_player, um cur_time hast Du alles gefangen! Deine Zeiten sind notiert, du kannst die Gruppe jetzt verlassen. *pause*2500*
+qwt_Intro = *com_channel*com_dmsg* cur_player Herzlichen Glückwunsch cur_player, um cur_time hast Du alles gefangen! Deine Zeiten sind notiert, du kannst die Gruppe verlassen. *pause*2500*
 qwt_NoCommand = False
 qwt_next = none
