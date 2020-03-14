@@ -11,13 +11,6 @@
     Restrictions pertaining Autohotkey may apply: https://www.autohotkey.com/docs/license.htm
 */
 
-/*
-TODOs
-    - enhance: Rework GUI to be purrty *lol*
-    - refactor: global variables into global data-object(s) if sensible
-    - refactor: rewrite, unify and clean up complete command-param handling in .pwt & to and from chat-sys
-*/
-
 ; Settings system stuff in AHK for this program
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Warn  ; Enable warnings to assist with detecting common errors.

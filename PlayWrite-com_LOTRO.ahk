@@ -17,8 +17,8 @@ ProcessCommands(commandline)
 	; make globals accessible to this function
 	global com_Debug, com_Channel
 	
-	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*(\w+?)\*\w+?\*$", command)
-	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*\w+?\*(\w+?)\*$", parameter)
+	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*(\w+?)\*.+?\*$", command)
+	trashpos := RegExMatch(commandline, "(*ANYCRLF)^\*\w+?\*(.+?)\*$", parameter)
 	
 	if (com_Debug)
 		Debug.WriteNL("PROCESS command: >" . command1 . "< parameter: >" . parameter1 . "<")

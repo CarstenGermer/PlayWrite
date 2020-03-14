@@ -142,7 +142,7 @@ ProcessActor(curLine)
 			if (com_Debug)
 				Debug.WriteNL("while curLine: " . curLine)
 			;find the position of the leftmost subcommand...
-			foundPos := RegExMatch(curLine, "\*\w+?\*\w+?\*",foundSubCommand)
+			foundPos := RegExMatch(curLine, "\*\w+?\*.+?\*",foundSubCommand)
 			if (com_Debug)
 				Debug.WriteNL("foundPos " . foundPos)
 			;if the leftmost subcommand _is not_ immediately at the beginning of the line...
@@ -174,7 +174,7 @@ ProcessActor(curLine)
 			if (com_Debug)
 				Debug.WriteNL("partsLine " . A_Index . ": " . partsLine[A_Index])
 			; this part a command or spoken text?
-			if (RegExMatch(partsLine[A_Index], "(*ANYCRLF)^\*\w+?\*\w+?\*$"))
+			if (RegExMatch(partsLine[A_Index], "(*ANYCRLF)^\*\w+?\*.+?\*$"))
 			{
 				; is a command - process
 				ProcessCommands(partsLine[A_Index])
