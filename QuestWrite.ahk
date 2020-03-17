@@ -62,6 +62,7 @@ global qwt_InPlay := False
 global qwt_CropTail := True
 global qwt_LootCheck := False
 global curLine := ""
+global curLoot := ""
 global PlayerNextStep := ""
 
 ; Settings for dealing with command-(log)file
@@ -71,7 +72,8 @@ global cfLastSize := 0
 global cfCurrentLineAmount := 0
 global cfLastLineAmount := 0
 global newFileLines := []
-global cfLineClean := i18n("cfLineCleanQWT", "System")
+global cfLineCleanQWT := i18n("cfLineCleanQWT", "System")
+global cfLineCleanQWTloot := i18n("cfLineCleanQWTloot", "System")
 global cfFilePollTime := % i18n("cfFilePolltime", "System") + 1 - 1 ; weird syntax for int(string) ...
 
 CheckAHK()
@@ -150,7 +152,6 @@ if not (tempval = "qwt_LootCheck") {
         qwt_LootCheck := False
     else {
         qwt_LootCheck := tempval
-        cfLineClean := i18n("cfLineCleanQWTloot", "System")
     }
 }
 tempval := QWTfilefetch("qwt_Timegap")
@@ -260,6 +261,7 @@ if A_GuiEvent = DoubleClick
 return
 
 PlayerNextStep:
+; Refactor: Push code for advancing players to a genereal function
 if (PlayerNextStep = "none")
     Return
 FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
@@ -278,17 +280,6 @@ Loop % LV_GetCount()
 }
 PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
 GuiControl,, PlayerNextStep, % PlayerNextStep
-cfLineClean := i18n("cfLineCleanQWT", "System")
-tempval := QWTfilefetch("qwt_LootCheck", qwt_Section)
-if not (tempval = "qwt_LootCheck") {
-    if (tempval = "False") {
-        qwt_LootCheck := False
-    }
-    else {
-        qwt_LootCheck := tempval
-        cfLineClean := i18n("cfLineCleanQWTloot", "System")
-    }
-}
 tempval := QWTfilefetch("qwt_Timegap", qwt_Section)
 if not (tempval = "qwt_Timegap") {
     qwt_Timegap := tempval + 1 - 1
@@ -306,7 +297,6 @@ if (RegExMatch(curLine, "qwt_invite")) {
         Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
     OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
 }
-
 StopTimer()
 ProcessActor(curLine)
 StartTimer()
@@ -446,10 +436,14 @@ QWTfilefetch(msg_key, inisection := false)
 ParseCommandfile()
 {
 	; make globals accessible to this function
-	global com_Debug, qwt_CurrentPlayer, curLineLow, qwt_play, qwt_play1, qwt_NoCommand, tempval
+	global com_Debug, qwt_CurrentPlayer, curLine, curLoot, qwt_play, qwt_play1, qwt_NoCommand, tempval
     global cfCurrentSize, cfFilename, cfLastSize, qwt_Section, PlayerNextStep, qwt_CurrTimestamp, qwt_Timegap
     global curFile, cfCurrentLineAmount, cfLastLineAmount, lv_currClient, lv_currSection, QWTPlayerHistory
-    curLineLow := ""
+    global cfLineCleanQWT, cfLineCleanQWTloot, qwt_LootCheck
+    curKeyword := ""
+    curValue := ""
+    curLine := ""
+    curLoot := ""
     qwt_play := ""
     qwt_play1 := ""
     qwt_goto := ""
@@ -492,15 +486,13 @@ ParseCommandfile()
             Debug.WriteNL("> newFileLine " . A_Index . ": " . newFileLines[A_Index] . "<")
         
         curLine := newFileLines[A_Index]
+        curLoot := ""
         
         if (com_Debug)
         {
             Debug.WriteNL("Processing newFileLines #" . A_Index . "<")
             Debug.WriteNL("curLine: " . curLine . "<")
         }
-        
-        ; make curLine all lowercase
-        StringLower, curLineLow, curLine
         
         ; cut timestamp and space out of line if present
         if ( RegExMatch(curLine, "^\[\d\d\/\d\d\s(\d\d):(\d\d):(\d\d)\s(\w\w)\]\s", foundTime) ) {
@@ -513,42 +505,27 @@ ParseCommandfile()
         else {
             FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
         }
-        
-        ; if we are not checking for loot
-        if not (qwt_LootCheck) {
-            ; if we are not adressed, dismiss
-            if not (RegExMatch(curLineLow, qwt_Actor))
-            {
-                if (com_Debug)
-                    Debug.WriteNL("can't find my name in line, dismissing.")
-                continue
-            }
-        }
 
-        if ( RegExMatch(curLine, cfLineClean, foundLineRaw) )
-        {
-            if (com_Debug)
-            {
-                Debug.WriteNL("foundLineRaw1: " . foundLineRaw1 . "<")
-                Debug.WriteNL("foundLineRaw2: " . foundLineRaw2 . "<")
+        ; Check against cfLineCleanQWT and cfLineCleanQWTloot or "No cfLineClean in Line:"
+        if ( RegExMatch(curLine, cfLineCleanQWT, foundLineRaw) ) {
+            if (com_Debug) {
+                Debug.WriteNL("Found player in curLine: " . foundLineRaw1 . "<")
+                Debug.WriteNL("Player says in curLine: " . foundLineRaw2 . "<")
             }
             qwt_CurrentPlayer := foundLineRaw1
             curLine := foundLineRaw2
-            if (com_Debug)
-                Debug.WriteNL(qwt_CurrentPlayer . " tells me " . curLine . "<")
         }
-        else
-        {
+        else if ( RegExMatch(curLine, cfLineCleanQWTloot, foundLineRaw) ) {
+            if (com_Debug) {
+                Debug.WriteNL("Found player in curLine: " . foundLineRaw1 . "<")
+                Debug.WriteNL("Found loot in curLine: " . foundLineRaw2 . "<")
+            }
+            qwt_CurrentPlayer := foundLineRaw1
+            curLoot := foundLineRaw2
+        }
+        else {
             if (com_Debug)
                 Debug.WriteNL("No cfLineClean in Line:" . curLine . "<")
-            continue
-        }
-
-        ; ignore empty lines
-        if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
-        {
-            if (com_Debug)
-                Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
             continue
         }
         
@@ -569,20 +546,60 @@ ParseCommandfile()
             qwt_Section := lv_currSection
         }
 
-        ; look for one of the keywords of the current section in curLineLow
-        curKeyword := ""
-        For Key, Value in QWTArray[lv_currSection]
+        ; get qwt_LootCheck from qwtCurrentPlayers section, if true and curLoot="" dismiss
+        qwt_LootCheck := False
+        tempval := QWTfilefetch("qwt_LootCheck", lv_currSection)
+        if not (tempval = "qwt_LootCheck") {
+            if (tempval = "False")
+                qwt_LootCheck := False
+            else {
+                qwt_LootCheck := tempval
+            }
+        }
+        Debug.WriteNL("qwt_LootCheck is now: " . qwt_LootCheck . "<")
+        if (qwt_LootCheck) {
+            if (curLoot = "") {
+                if (com_Debug) {
+                    Debug.WriteNL("Player is supposed to find loot but no loot found in Message.")
+                }
+                continue
+            }
+            else {
+                ; set curLine = curLoot
+                curLine := curLoot
+            }
+        }
+
+        Debug.WriteNL("About to lower curLine: " . curLine . "<")
+        ; lower curLine
+        StringLower, curLine, curLine
+        Debug.WriteNL("curLine is now: " . curLine . "<")
+
+        ; ignore empty lines
+        if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
         {
+            if (com_Debug)
+                Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
+            continue
+        }
+
+        Debug.WriteNL("About to run check for keywords in " . curLine)
+        
+        ; scan for keywords in the players section of the quest
+        ; look for one of the keywords from the players current section of the quest
+        curKeyword := ""
+        curValue := ""
+        For Key, Value in QWTArray[lv_currSection] {
             if (RegExMatch(Key, "qwt_"))
                 Continue
-            if (RegExMatch(curLineLow, Key))
+            if (RegExMatch(i18n(curLine), Key))
             {
                 curKeyword := Key
                 curLine := Value
                 Break
             }
         }
-
+        
         if (curKeyword = "")
         {
             qwt_NoCommand := QWTfilefetch("qwt_NoCommand")
@@ -602,7 +619,6 @@ ParseCommandfile()
         curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
         FormatTime, tempval, qwt_CurrTimestamp, HH:mm:ss
         curLine := RegExReplace(curLine, "cur_time", tempval)
-
 
         if (RegExMatch(curLine, "qwt_play:(.+\.\w+)", qwt_play))
         {
@@ -677,6 +693,7 @@ ParseCommandfile()
         }
 
         ; process qwt_goto
+        ; Refactor: Push code for advancing players to a genereal function
         if not (qwt_goto = "")
         {
             Loop % LV_GetCount()

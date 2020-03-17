@@ -111,54 +111,54 @@ qwt_next = none
 qwt_Intro = *com_channel*com_dmsg* cur_player Fange einen Zwergwels, einen Weissfisch und eine Elritze! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-zwergwels = qwt_goto:steptwozwergwels
-weissfisch = qwt_goto:steptwoweissfisch
-elritze = qwt_goto:steptwoelritze
+catfish = qwt_goto:steptwozwergwels
+dace = qwt_goto:steptwoweissfisch
+minnow = qwt_goto:steptwoelritze
 qwt_next = none
 
 [steptwozwergwels]
 qwt_Intro = *com_channel*com_dmsg* cur_player Ein Weissfisch und eine Elritze noch! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-weissfish = qwt_goto:stepthreeelritze
-elritze = qwt_goto:stepthreeweissfisch
+dace = qwt_goto:stepthreeelritze
+minnow = qwt_goto:stepthreeweissfisch
 qwt_next = none
 
 [steptwoweissfisch]
 qwt_Intro = *com_channel*com_dmsg* cur_player Ein Zwergwels und eine Elritze noch! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-zwergwels = qwt_goto:stepthreeelritze
-elritze = qwt_goto:stepthreezwergwels
+catfish = qwt_goto:stepthreeelritze
+minnow = qwt_goto:stepthreezwergwels
 qwt_next = none
 
 [steptwoelritze]
 qwt_Intro = *com_channel*com_dmsg* cur_player Ein Zwergwels und ein Weissfisch noch! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-zwergwels = qwt_goto:stepthreeweissfisch
-weissfisch = qwt_goto:stepthreezwergwels
+catfish = qwt_goto:stepthreeweissfisch
+dace = qwt_goto:stepthreezwergwels
 qwt_next = none
 
 [stepthreezwergwels]
 qwt_Intro = *com_channel*com_dmsg* cur_player Nur ein Zwergwels noch zu fangen! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-zwergwels = qwt_goto:allesgefangen
+catfish = qwt_goto:allesgefangen
 qwt_next = none
 
 [stepthreeweissfisch]
 qwt_Intro = *com_channel*com_dmsg* cur_player Nur ein Weissfisch noch zu fangen! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-weissfisch = qwt_goto:allesgefangen
+dace = qwt_goto:allesgefangen
 qwt_next = none
 
 [stepthreeminnow]
 qwt_Intro = *com_channel*com_dmsg* cur_player Nur eine Elritze noch zu fangen! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
-elritze = qwt_goto:allesgefangen
+minnow = qwt_goto:allesgefangen
 qwt_next = none
 
 [allesgefangen]
