@@ -261,45 +261,9 @@ if A_GuiEvent = DoubleClick
 return
 
 PlayerNextStep:
-; Refactor: Push code for advancing players to a genereal function
 if (PlayerNextStep = "none")
     Return
-FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
-Loop % LV_GetCount()
-{
-    LV_GetText(lv_currClient, A_Index, 1)
-    if (lv_currClient = qwt_CurrentPlayer)
-    {
-        LV_GetText(tempval, A_Index , 3)
-        QWTPlayerHistory[qwt_CurrentPlayer, qwt_Section] := tempval
-        qwt_Section := PlayerNextStep
-        LV_Modify(A_Index , "Col2", qwt_Section)
-        LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
-        Break
-    }
-}
-PlayerNextStep := QWTfilefetch("qwt_next", qwt_Section)
-GuiControl,, PlayerNextStep, % PlayerNextStep
-tempval := QWTfilefetch("qwt_Timegap", qwt_Section)
-if not (tempval = "qwt_Timegap") {
-    qwt_Timegap := tempval + 1 - 1
-}
-else {
-    qwt_Timegap := 0
-}
-curLine := QWTfilefetch("qwt_intro", qwt_Section)
-curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
-FormatTime, tempval, qwt_CurrTimestamp, HH:mm:ss
-curLine := RegExReplace(curLine, "cur_time", tempval)
-if (RegExMatch(curLine, "qwt_invite")) {
-    curLine := RegExReplace(curLine, "qwt_invite")
-    if (com_Debug)
-        Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
-    OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
-}
-StopTimer()
-ProcessActor(curLine)
-StartTimer()
+AdvancePlayer(PlayerNextStep)
 Return
 
 SetSysloc:
@@ -580,7 +544,6 @@ ParseCommandfile()
             continue
         }
 
-        ; scan for keywords in the players section of the quest
         ; look for one of the keywords from the players current section of the quest
         curKeyword := ""
         curValue := ""
@@ -688,54 +651,9 @@ ParseCommandfile()
         }
 
         ; process qwt_goto
-        ; Refactor: Push code for advancing players to a genereal function
         if not (qwt_goto = "")
         {
-            Loop % LV_GetCount()
-            {
-                LV_GetText(lv_currClient, A_Index, 1)
-                if (lv_currClient = qwt_CurrentPlayer)
-                {
-                    LV_GetText(tempval, A_Index , 3)
-                    QWTPlayerHistory[qwt_CurrentPlayer, qwt_Section] := tempval
-                    qwt_Section := qwt_goto
-                    LV_Modify(A_Index , "Col2", qwt_Section)
-                    LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
-                    Break
-                }
-            }
-            ; button next neu
-            PlayerNextStep := QWTfilefetch("qwt_next", qwt_section)
-            GuiControl,, PlayerNextStep, % PlayerNextStep
-            cfLineClean := i18n("cfLineCleanQWT", "System")
-            tempval := QWTfilefetch("qwt_LootCheck", qwt_Section)
-            if not (tempval = "qwt_LootCheck") {
-                if (tempval = "False") {
-                    qwt_LootCheck := False
-                }
-                else {
-                    qwt_LootCheck := tempval
-                    cfLineClean := i18n("cfLineCleanQWTloot", "System")
-                }
-            }
-            tempval := QWTfilefetch("qwt_Timegap", qwt_Section)
-            if not (tempval = "qwt_Timegap") {
-                qwt_Timegap := tempval + 1 - 1
-            }
-            else {
-                qwt_Timegap := 0
-            }
-            curLine := QWTfilefetch("qwt_intro", qwt_Section)
-            curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
-            FormatTime, tempval, qwt_CurrTimestamp, HH:mm:ss
-            curLine := RegExReplace(curLine, "cur_time", tempval)
-            if (RegExMatch(curLine, "qwt_invite")) {
-                curLine := RegExReplace(curLine, "qwt_invite")
-                if (com_Debug)
-                    Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
-                OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
-            }
-            ProcessActor(curLine)
+            AdvancePlayer(qwt_goto)
         }
         
         ; process qwt_remove
@@ -770,8 +688,7 @@ ParseCommandfile()
     return True
 }
 
-ParsePlay()
-{
+ParsePlay() {
 	; make globals accessible to this function
 	global com_Debug, pwt_Script, qwt_Actor, qwt_InPlay, qwt_play
     global pwt_CurrentLine, pwts_Running, qwt_Questname
@@ -897,8 +814,60 @@ ParsePlay()
     Return True
 }
 
-StopTimer()
-{
+AdvancePlayer(AdvanceTo="prequest") {
+    Global qwt_CurrTimestamp, lv_currClient, qwt_CurrentPlayer, qwt_Section, tempval, qwt_Timegap
+    Global PlayerNextStep, cfLineClean, qwt_LootCheck, curLine
+    FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
+    Loop % LV_GetCount()
+    {
+        LV_GetText(lv_currClient, A_Index, 1)
+        if (lv_currClient = qwt_CurrentPlayer)
+        {
+            LV_GetText(tempval, A_Index , 3)
+            QWTPlayerHistory[qwt_CurrentPlayer, qwt_Section] := tempval
+            qwt_Section := AdvanceTo
+            LV_Modify(A_Index , "Col2", qwt_Section)
+            LV_Modify(A_Index , "Col3", qwt_CurrTimestamp)
+            Break
+        }
+    }
+    ; button next neu
+    PlayerNextStep := QWTfilefetch("qwt_next", qwt_section)
+    GuiControl,, PlayerNextStep, % PlayerNextStep
+    cfLineClean := i18n("cfLineCleanQWT", "System")
+    tempval := QWTfilefetch("qwt_LootCheck", qwt_Section)
+    if not (tempval = "qwt_LootCheck") {
+        if (tempval = "False") {
+            qwt_LootCheck := False
+        }
+        else {
+            qwt_LootCheck := tempval
+            cfLineClean := i18n("cfLineCleanQWTloot", "System")
+        }
+    }
+    tempval := QWTfilefetch("qwt_Timegap", qwt_Section)
+    if not (tempval = "qwt_Timegap") {
+        qwt_Timegap := tempval + 1 - 1
+    }
+    else {
+        qwt_Timegap := 0
+    }
+    curLine := QWTfilefetch("qwt_intro", qwt_Section)
+    curLine := RegExReplace(curLine, "cur_player", qwt_CurrentPlayer)
+    FormatTime, tempval, qwt_CurrTimestamp, HH:mm:ss
+    curLine := RegExReplace(curLine, "cur_time", tempval)
+    if (RegExMatch(curLine, "qwt_invite")) {
+        curLine := RegExReplace(curLine, "qwt_invite")
+        if (com_Debug)
+            Debug.WriteNL("Inviting player " . qwt_CurrentPlayer . "into group.")
+        OutputToTargetWindow(i18n("com_invite") . " " . qwt_CurrentPlayer)
+    }
+    StopTimer()
+    ProcessActor(curLine)
+    StartTimer()
+}
+
+StopTimer() {
     if (com_Debug)
         Debug.WriteNL("STOPPING Timer...")
     SetTimer, ProcessTeaser, Off
@@ -906,8 +875,7 @@ StopTimer()
     Return
 }
 
-StartTimer()
-{
+StartTimer() {
     global com_Debug, qwt_Interval, cfFilePollTime, cfLastSize, cfFilename, curFile, cfLastLineAmount, OutputVar, qwt_CropTail
     if (qwt_CropTail)
     {
@@ -939,8 +907,7 @@ StartTimer()
     Return
 }
 
-ExportCSV()
-{
+ExportCSV() {
     Global qwt_Questname, qwt_Actor, QWTPlayerHistory
     exportfile :=  ""
     exportfilename := A_NowUTC . "-" . qwt_Questname . "-" . qwt_Actor . ".csv"
@@ -974,8 +941,7 @@ ExportCSV()
     Return True
 }
 
-ImportCSV()
-{
+ImportCSV() {
     global QWTPlayerHistory, tempval
     importfile := ""
     dummy := 0
