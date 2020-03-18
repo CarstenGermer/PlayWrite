@@ -556,7 +556,6 @@ ParseCommandfile()
                 qwt_LootCheck := tempval
             }
         }
-        Debug.WriteNL("qwt_LootCheck is now: " . qwt_LootCheck . "<")
         if (qwt_LootCheck) {
             if (curLoot = "") {
                 if (com_Debug) {
@@ -570,10 +569,8 @@ ParseCommandfile()
             }
         }
 
-        Debug.WriteNL("About to lower curLine: " . curLine . "<")
         ; lower curLine
         StringLower, curLine, curLine
-        Debug.WriteNL("curLine is now: " . curLine . "<")
 
         ; ignore empty lines
         if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
@@ -583,8 +580,6 @@ ParseCommandfile()
             continue
         }
 
-        Debug.WriteNL("About to run check for keywords in " . curLine)
-        
         ; scan for keywords in the players section of the quest
         ; look for one of the keywords from the players current section of the quest
         curKeyword := ""
