@@ -328,9 +328,9 @@ ProcessTeaser()
 {
     global qwt_Teaser, qwt_Interval
     if (qwt_Interval) {
-        SetTimer, ProcessTeaser, Off
+        StopTimer()
         ProcessActor(qwt_Teaser)
-        SetTimer, ProcessTeaser, % qwt_Interval
+        StartTimer()
     }
 }
 
