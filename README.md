@@ -3,6 +3,10 @@
 PlayWrite is a system to support solo or multiactor player-run performances in LOTRO. It reads textfiles containing a play or sketch that's written in human-readable syntax and outputs the included text and commands to the target system or passes them on to the respective clients (performers). For plays with many performers all communication between server and client(s) is sent via the ingame chat-channels and read by tailing a chat-log of that channel.
 ## What's QuestWrite?
 QuestWrite is a similar system for player run quests and untilizes the same systems for explanations, story etc. It reads a chat-log of a general chat-channel and recognizes it's structure and keywords. Multi-stage quests are realized as multiple single quests that are chained together by story and tokens given out.
+## Can you show me?
+Sure, I'll link vids I made about PlayWrite / QuestWrite.  
+https://youtu.be/WQji1Ccy6k0
+...
 ## Is there more?
 I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
 ## Why AutoHotkey?
