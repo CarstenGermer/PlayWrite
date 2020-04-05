@@ -154,7 +154,7 @@ qwt_LootCheck = True
 dace = qwt_goto:allesgefangen
 qwt_next = none
 
-[stepthreeminnow]
+[stepthreeelritze]
 qwt_Intro = *com_channel*com_dmsg* cur_player Nur eine Elritze noch zu fangen! *pause*2500*
 qwt_NoCommand = False
 qwt_LootCheck = True
