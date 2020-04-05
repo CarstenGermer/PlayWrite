@@ -5,7 +5,8 @@ PlayWrite is a system to support solo or multiactor player-run performances in L
 QuestWrite is a similar system for player run quests and untilizes the same systems for explanations, story etc. It reads a chat-log of a general chat-channel and recognizes it's structure and keywords. Multi-stage quests are realized as multiple single quests that are chained together by story and tokens given out.
 ## Can you show me?
 Sure, I'll link vids I made about PlayWrite / QuestWrite.  
-https://youtu.be/WQji1Ccy6k0
+https://www.youtube.com/watch?v=WQji1Ccy6k0
+https://www.youtube.com/watch?v=fGx0CUgV78c
 ...
 ## Is there more?
 I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
@@ -19,7 +20,7 @@ Besides the training aspect, PlayWrite is a prototype of chaining into the commu
 ## Where are the manuals?
 There's user documentation [right here](USERDOCUMENTATION.md).
 ## Can I get involved?
-At the moment I'm really only looking for a few persons to help me test this further. I play as Gutur McGermot of the Kin 'Trollhappen' on Ithil at GMT evenings. If you plan to customize PlayWrite for another game, I would be very much interested to hear from you, though I don't play any other games which PlayWrite could be used in atm.
+At the moment I'm really only looking for a few persons to help me test this further. I play as Gutur McGermot of the Kin 'Extraordinarily Adequate' on Ithil at GMT evenings. If you plan to customize PlayWrite for another game, I would be very much interested to hear from you, though I don't play any other games which PlayWrite could be used in atm.
 ## May I sponsor you?
 Naa, buy me a coffee or a beer some time, maybe.
 ## Legal stuff
