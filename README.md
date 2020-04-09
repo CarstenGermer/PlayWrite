@@ -5,8 +5,8 @@ PlayWrite is a system to support solo or multiactor player-run performances in L
 QuestWrite is a similar system for player run quests and untilizes the same systems for explanations, story etc. It reads a chat-log of a general chat-channel and recognizes it's structure and keywords. Multi-stage quests are realized as multiple single quests that are chained together by story and tokens given out.
 ## Can you show me?
 Sure, I'll link vids I made about PlayWrite / QuestWrite.  
-https://www.youtube.com/watch?v=WQji1Ccy6k0
-https://www.youtube.com/watch?v=fGx0CUgV78c
+https://www.youtube.com/watch?v=WQji1Ccy6k0  
+https://www.youtube.com/watch?v=fGx0CUgV78c  
 ...
 ## Is there more?
 I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
