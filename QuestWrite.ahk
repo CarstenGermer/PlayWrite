@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 202003.1.1
+    Version 202004.0.0
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -24,7 +24,7 @@ FileEncoding, UTF-8 ; According to AHKs documentation the file has to be saved a
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
-global com_Debug := False
+global com_Debug := True
 global i18nArray := []
 global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
@@ -478,6 +478,15 @@ ParseCommandfile()
             }
             qwt_CurrentPlayer := foundLineRaw1
             curLine := foundLineRaw2
+            StringLower, curLine, curLine
+            ; check for adressing the questgiver, else it not really lineclean
+            StringLower, tempval, qwt_Actor
+            if not (RegExMatch(curLine, tempval))
+            {
+                if (com_Debug)
+                    Debug.WriteNL("can't find my name in non-loot line, dismissing.")
+                continue
+            }
         }
         else if ( RegExMatch(curLine, cfLineCleanQWTloot, foundLineRaw) ) {
             if (com_Debug) {
