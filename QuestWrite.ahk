@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 202004.0.0
+    Version 202004.0.1
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
