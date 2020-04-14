@@ -24,7 +24,7 @@ FileEncoding, UTF-8 ; According to AHKs documentation the file has to be saved a
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
-global com_Debug := True
+global com_Debug := False
 global i18nArray := []
 global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
