@@ -8,6 +8,7 @@ Sure, I'll link vids I made about PlayWrite / QuestWrite.
 https://www.youtube.com/watch?v=WQji1Ccy6k0  
 https://www.youtube.com/watch?v=fGx0CUgV78c  
 https://www.youtube.com/watch?v=JtVo4b6Rd28  
+https://www.youtube.com/watch?v=A8_UMrKTL8c  
 ...
 ## Is there more?
 I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
