@@ -122,12 +122,10 @@ Bard: *emote*lookaround* They were on the lookout for each other and all the fin
 Bard: *emote*story* could rest assured that when the two met, hillarity would ensue *pause*4000*
 Bard: *emote*cheer* and there would be new and exciting stories to tell! *pause*4000*
 
-# switch cut below for performing multiple
-# Bard: *emote*story* Some of those will follow later. *pause*3000*
-# Bard: *emote*story* But those are other stories for another time. *pause*4500*
-
 Bard: *emote*bow* Thank you for listening. *pause*3000*
-Bard: *emote*bow* Thank you, thank you. *emote*bow* *pause*3500*
-Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
+# Bard: *emote*story* But those are other stories for another time. *pause*4500*
+Bard: *emote*story* There will be other stories later. *pause*4500*
+# Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
+Bard: *emote*bow* Thank you, thank you. *pause*3500*
 
 Bard: *music*on* *playfile*/rockNhardNmetal/1ppl-3doorsdown-awayftsun*

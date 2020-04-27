@@ -113,12 +113,10 @@ Bard: *emote*shrug* or was the burglar just cruelly pulling his legs again? *pau
 Bard: *emote*story* As Devon went to sleep he once again dared to dream *pause*3000*
 Bard: *emote*story* of a better life in peace and freedom. *pause*4000*
 
-# switch cut below for performing multiple
-# Bard: *emote*story* But that story will be told later. *pause*4500*
-# Bard: *emote*story* But that is another story for another time. *pause*6500*
-
-Bard: *emote*bow* *pause*1000* Thank you for listening.
-Bard: *emote*bow* *pause*2500* Thank you, thank you. *emote*bow* *pause*3500*
-Bard: *emote*story* I will be back with one more tale in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
+Bard: *emote*bow* Thank you for listening. *pause*3000*
+# Bard: *emote*story* But those are other stories for another time. *pause*4500*
+Bard: *emote*story* There will be other stories later. *pause*4500*
+# Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
+Bard: *emote*bow* Thank you, thank you. *pause*3500*
 
 Bard: *music*on* *playfile*/rockNhardNmetal/1ppl-3doorsdown-awayftsun*

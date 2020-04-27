@@ -188,10 +188,11 @@ Bard: *emote*story* and spot a peculiar pig begging for food and doing antics, *
 Bard: *emote*look* be aware of any goats close by! *pause*3000*
 Bard: *emote*eat* Nibbling on your clothes and purses! *pause*4000*
 
-# switch cut below for performing multiple
-# Bard: *emote*story* And there will be more stories later. *pause*7500*
+Bard: *emote*bow* Thank you for listening. *pause*3000*
+# Bard: *emote*story* But those are other stories for another time. *pause*4500*
+# Bard: *emote*story* There will be other stories later. *pause*4500*
 Bard: *emote*yes* And there will be other stories at other times. *pause*4000*
+# Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
+Bard: *emote*bow* Thank you, thank you. *pause*3500*
 
-Bard: *emote*bow* *pause*1000* Thank you for listening.
-Bard: *emote*bow* *pause*2500* Thank you, thank you. *emote*bow* *pause*3500* *emote*bye* *pause*3500*
 Bard: *music*on* *playfile*/rockNhardNmetal/1ppl-3doorsdown-awayftsun*

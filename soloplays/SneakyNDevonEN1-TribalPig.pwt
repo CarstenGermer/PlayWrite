@@ -103,12 +103,10 @@ Bard: *emote*story* met for the first time in their lives. *pause*4500*
 Bard: *emote*cheer* Indeed, they met many times more under the most peculiar circumstances! *pause*5500*
 Bard: *emote*story* And as both are very much doing well, I'm sure they will meet time and time again. *pause*7500*
 
-# switch cut below for performing multiple
-# Bard: *emote*story* But those are other stories for later. *pause*4500*
-# Bard: *emote*story* But those are other stories for another time. *pause*4500*
-
 Bard: *emote*bow* Thank you for listening. *pause*3000*
+# Bard: *emote*story* But those are other stories for another time. *pause*4500*
+Bard: *emote*story* There will be other stories later. *pause*4500*
+# Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
 Bard: *emote*bow* Thank you, thank you. *pause*3500*
-Bard: *emote*story* I will be back with more tales in about ten minutes. *pause*1500* *emote*yes* *pause*1000*
 
 Bard: *music*on* *playfile*/rockNhardNmetal/1ppl-3doorsdown-awayftsun*
