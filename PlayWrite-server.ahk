@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 202003.0.0
+    Version 202004.0.2
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -24,9 +24,10 @@ FileEncoding, UTF-8 ; ; According to AHKs documentation the file has to be saved
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
+global iniPWTi18n := "i18n-PWT-LOTRO.ini"
+#Include PlayWrite-com_LOTRO.ahk
 global com_Debug := False
 global i18nArray := []
-global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
 global pwts_Running := False
 global pwts_WaitingLinedone := ""
@@ -438,7 +439,7 @@ ParseCommandfile()
         }
         
         ; ignore empty lines
-        if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
+        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System"))
         {
             if (com_Debug)
                 Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
@@ -448,7 +449,7 @@ ParseCommandfile()
         ; trim line from stray whitespaces
         curLine := Trim(curLine)
                 
-        ; if line is from director (this instance) igore
+        ; if line is from director (this instance) ignore
         if ( RegExMatch(curLine, "(*ANYCRLF)^\s*" . i18n("cfDirector", "System") . "\s*:") )
         {
             if (com_Debug)
@@ -655,7 +656,6 @@ Pause::
 Goto PlayPause
 return
 
-; Include general functions used in both, server and client
+; Include general functions
 #Include PlayWrite-toolfuncs.ahk
-#Include PlayWrite-com_LOTRO.ahk
 #Include debughelper.ahk

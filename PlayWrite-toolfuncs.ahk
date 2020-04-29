@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 202003.0.0
+    Version see PlayWrite-server.ahk
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -182,7 +182,7 @@ ProcessActor(curLine)
 			else
 			{
 				; is spoken text - output
-				OutputToTargetWindow(com_Channel . " " . partsLine[A_Index])
+				OutputToTargetWindow(i18n("com_Channel") . " " . partsLine[A_Index])
 			}
 		}
 		if (com_Debug)
@@ -194,7 +194,7 @@ ProcessActor(curLine)
 		curLine := RegExReplace(curLine, "(\r\n|\r|\n)")
         if (com_Debug)
             Debug.WriteNL("ProcessActor output raw curLine: " . curLine)
-		OutputToTargetWindow(com_Channel . " " . curLine)
+		OutputToTargetWindow(i18n("com_Channel") . " " . curLine)
 	}
 	return true
 }
