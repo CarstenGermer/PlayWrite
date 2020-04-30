@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 202003.0.0
+    Version see PlayWrite-server.ahk
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -28,7 +28,7 @@ ProcessCommands(commandline)
         case "com_Channel":
         {
 			if (com_Debug)
-				Debug.WriteNL("COMMAND setting locale value of com_Channel to i18n(" . parameter1 . ") " . parameter1 . "<")
+				Debug.WriteNL("COMMAND setting value of com_Channel to i18n(" . parameter1 . ") = " . i18n(parameter1) . "<")
             com_Channel := i18n(parameter1)
         
         }

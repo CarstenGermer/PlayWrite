@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 202003.0.0
+    Version see PlayWrite-server.ahk
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -181,12 +181,14 @@ ProcessActor(curLine)
 			}
 			else
 			{
-				; is spoken text - output
+				; is plain text = output
 				OutputToTargetWindow(com_Channel . " " . partsLine[A_Index])
 			}
 		}
 		if (com_Debug)
 			Debug.WriteNL("--- Sublines end")
+        ; reset com_Channel in case there was temporary or such in the line
+        com_Channel := i18n("com_Channel")
 	}
 	else
 	{

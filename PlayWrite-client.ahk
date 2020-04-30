@@ -1,6 +1,6 @@
 ﻿/*
     PlayWrite, copyright 2020 by Carsten Germer
-    Version 202003.0.0
+    Version see PlayWrite-server.ahk
     
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -24,9 +24,10 @@ FileEncoding, UTF-8 ; This actually means the FILE HAS TO BE SAVED AS "UTF-8 wit
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
+global iniPWTi18n := "i18n-PWT-LOTRO.ini"
+#Include PlayWrite-com_LOTRO.ahk
 global com_Debug := False
 global i18nArray := []
-global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
 global pwtc_Running := false
 global pwtc_Stopping := false
@@ -265,7 +266,7 @@ Loop, % newFileLines.MaxIndex()
 	}
 	
 	; ignore empty lines
-	if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
+	if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System")))
 	{
 		if (com_Debug)
 			Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
@@ -424,7 +425,6 @@ ProcessDirector(curLine)
 	return true
 }
 
-; Include general functions used in both, server and client
+; Include general functions
 #Include PlayWrite-toolfuncs.ahk
-#Include PlayWrite-com_LOTRO.ahk
 #Include debughelper.ahk

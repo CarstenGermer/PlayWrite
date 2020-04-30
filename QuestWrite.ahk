@@ -1,6 +1,6 @@
 ﻿/*
     QuestWrite, copyright 2020 by Carsten Germer
-    Version 202004.0.1
+    Version see PlayWrite-server.ahk
 
     This program is free software. It comes without any warranty, to
     the extent permitted by applicable law. You can redistribute it
@@ -24,9 +24,10 @@ FileEncoding, UTF-8 ; According to AHKs documentation the file has to be saved a
 SetKeyDelay , 150, 150 ; Relaxed key delays
 
 ; General settings
+global iniPWTi18n := "i18n-PWT-LOTRO.ini"
+#Include PlayWrite-com_LOTRO.ahk
 global com_Debug := False
 global i18nArray := []
-global iniPWTi18n := "i18n-PWT.ini"
 global pwt_SystemLoc := "English"
 global pwts_Running := True
 
@@ -263,6 +264,7 @@ return
 PlayerNextStep:
 if (PlayerNextStep = "none")
     Return
+FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
 AdvancePlayer(PlayerNextStep)
 Return
 
@@ -459,15 +461,19 @@ ParseCommandfile()
         }
         
         ; cut timestamp and space out of line if present
-        if ( RegExMatch(curLine, "^\[\d\d\/\d\d\s(\d\d):(\d\d):(\d\d)\s(\w\w)\]\s", foundTime) ) {
+        if ( RegExMatch(curLine, i18n("idTimestamp", "System"), foundTime) ) {
             tempval := foundtime1
             if (foundtime4 := "PM")
                 tempval := tempval + 12
             qwt_CurrTimestamp := A_YYYY . A_MM . A_DD . tempval . foundtime2 . foundtime3
-            curLine := RegExReplace(curLine, "^\[\d\d\/\d\d\s(\d\d:\d\d:\d\d\s\w\w)\]\s")
+            curLine := RegExReplace(curLine, i18n("idTimestamp", "System"))
+            if (com_Debug)
+                Debug.WriteNL("Timestamp found in chatline: " . qwt_CurrTimestamp . "<")
         }
         else {
             FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
+            if (com_Debug)
+                Debug.WriteNL("Timestamp set with FormatTime: " . qwt_CurrTimestamp . "<")
         }
 
         ; Check against cfLineCleanQWT and cfLineCleanQWTloot or "No cfLineClean in Line:"
@@ -546,7 +552,7 @@ ParseCommandfile()
         StringLower, curLine, curLine
 
         ; ignore empty lines
-        if (RegExMatch(curLine, "(*ANYCRLF)^\s*$"))
+        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System")))
         {
             if (com_Debug)
                 Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
@@ -745,7 +751,7 @@ ParsePlay() {
         ; honour !pwts_Running by sleeping a spell in loop
         while not (pwts_Running)
         {
-            Sleep, 1000
+            Sleep, 500
         }
     
         curLine := pwt_Script[pwt_CurrentLine]
@@ -826,7 +832,6 @@ ParsePlay() {
 AdvancePlayer(AdvanceTo="prequest") {
     Global qwt_CurrTimestamp, lv_currClient, qwt_CurrentPlayer, qwt_Section, tempval, qwt_Timegap
     Global PlayerNextStep, cfLineClean, qwt_LootCheck, curLine
-    FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
     Loop % LV_GetCount()
     {
         LV_GetText(lv_currClient, A_Index, 1)
@@ -992,7 +997,6 @@ Pause::
 Goto PlayPause
 return
 
-; Include general functions used in both, server and client
+; Include general functions
 #Include PlayWrite-toolfuncs.ahk
-#Include PlayWrite-com_LOTRO.ahk
 #Include debughelper.ahk
