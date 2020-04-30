@@ -264,6 +264,7 @@ return
 PlayerNextStep:
 if (PlayerNextStep = "none")
     Return
+FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
 AdvancePlayer(PlayerNextStep)
 Return
 
@@ -466,9 +467,13 @@ ParseCommandfile()
                 tempval := tempval + 12
             qwt_CurrTimestamp := A_YYYY . A_MM . A_DD . tempval . foundtime2 . foundtime3
             curLine := RegExReplace(curLine, i18n("idTimestamp", "System"))
+            if (com_Debug)
+                Debug.WriteNL("Timestamp found in chatline: " . qwt_CurrTimestamp . "<")
         }
         else {
             FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
+            if (com_Debug)
+                Debug.WriteNL("Timestamp set with FormatTime: " . qwt_CurrTimestamp . "<")
         }
 
         ; Check against cfLineCleanQWT and cfLineCleanQWTloot or "No cfLineClean in Line:"
@@ -547,7 +552,7 @@ ParseCommandfile()
         StringLower, curLine, curLine
 
         ; ignore empty lines
-        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System"))
+        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System")))
         {
             if (com_Debug)
                 Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
@@ -827,7 +832,6 @@ ParsePlay() {
 AdvancePlayer(AdvanceTo="prequest") {
     Global qwt_CurrTimestamp, lv_currClient, qwt_CurrentPlayer, qwt_Section, tempval, qwt_Timegap
     Global PlayerNextStep, cfLineClean, qwt_LootCheck, curLine
-    FormatTime, qwt_CurrTimestamp,, yyyyMMddHHmmss
     Loop % LV_GetCount()
     {
         LV_GetText(lv_currClient, A_Index, 1)

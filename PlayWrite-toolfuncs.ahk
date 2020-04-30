@@ -181,12 +181,14 @@ ProcessActor(curLine)
 			}
 			else
 			{
-				; is spoken text - output
-				OutputToTargetWindow(i18n("com_Channel") . " " . partsLine[A_Index])
+				; is plain text = output
+				OutputToTargetWindow(com_Channel . " " . partsLine[A_Index])
 			}
 		}
 		if (com_Debug)
 			Debug.WriteNL("--- Sublines end")
+        ; reset com_Channel in case there was temporary or such in the line
+        com_Channel := i18n("com_Channel")
 	}
 	else
 	{
@@ -194,7 +196,7 @@ ProcessActor(curLine)
 		curLine := RegExReplace(curLine, "(\r\n|\r|\n)")
         if (com_Debug)
             Debug.WriteNL("ProcessActor output raw curLine: " . curLine)
-		OutputToTargetWindow(i18n("com_Channel") . " " . curLine)
+		OutputToTargetWindow(com_Channel . " " . curLine)
 	}
 	return true
 }

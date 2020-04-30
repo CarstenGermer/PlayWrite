@@ -439,7 +439,7 @@ ParseCommandfile()
         }
         
         ; ignore empty lines
-        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System"))
+        if (RegExMatch(curLine, i18n("idComLogEmptyLine", "System")))
         {
             if (com_Debug)
                 Debug.WriteNL("Found empty newFileLine: " . curLine . "<")
