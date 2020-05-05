@@ -11,7 +11,10 @@ https://www.youtube.com/watch?v=JtVo4b6Rd28
 https://www.youtube.com/watch?v=A8_UMrKTL8c  
 ...
 ## Is there more?
-I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.
+I developed PlayWrite and QuestWrite as a standalone system that's largely agnostic of the target system. Both can be easily customized to work with any other game or chat-system as long as it allows to have different channels and can write log-files of those.  
+**Regarding other target games**, I have looked into WoW, ESO and FFXIV and it turns out none of these are able to write a concurrent chat log file. This is supposedly due to some optimization issues from back when those were developed.  
+That means that the absolute basic functionality, single user story telling, works out of the box. Run those systems in windowed and change the target window name in the ini accordingly.  
+Unfortunately this also means that PlayWrite with multiple actors and QuestWrite won't work as there is no real time communication via the systems possible and I do not want users to possibly violate terms of service by using more intrusive or circumventive methods for that.
 ## Why AutoHotkey?
 AutoHotkey is an immensely useful tool that many gamers around the world already know and have installed. Persons who want to participate in an event don't need to download uncommon software in binary format, which could contain malware. The scripts that constitute PlayWrite can be easily checked by anyone with some experience in software development.
 ## Can I do something different with PlayWrite / QuestWrite?
